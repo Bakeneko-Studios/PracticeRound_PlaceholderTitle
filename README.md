@@ -1,2 +1,2 @@
 # PracticeRound_PlaceholderTitle
-Remake of flappy bird into a PvP racing game.
+Remake of Flappy Bird into a PvP racing game.
