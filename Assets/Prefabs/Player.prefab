@@ -99,10 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50812271547e4cc438783c9875af8502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer1: 1
+  isPlayer1: 0
   gravity: 26
   jumpForce: 12.5
   jumpCooldown: 0.3
+  gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
 BoxCollider2D:
   m_ObjectHideFlags: 0
