@@ -1,4 +1,0 @@
-repository "SalemSpeedsters@certifiednovigradian@cloud.cn"
-  path "/"
-    br "/main"
-    co "/main"
