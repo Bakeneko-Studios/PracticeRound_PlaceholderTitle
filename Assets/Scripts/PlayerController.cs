@@ -2,11 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variable Declaration
     [SerializeField] private bool isPlayer1;
+    private bool isGrounded;
+
+    [Header("UI")]
+    public TextMeshProUGUI speedText;
+
+    [Header("Speed")]
+    [SerializeField] private float initialSpeed; //Default speed at game start
+    [HideInInspector] public float baseSpeed; //Default speed + bonus speed from energy orbs
+     public float speed; //Current speed
+
+    [Header("Gliding")]
+    [SerializeField] private float glideSpeedIncreaseRate;
+    [SerializeField] private float glideSpeedResetDuration;
 
     [Header("Jump")]
     [SerializeField] private float gravity;
@@ -26,6 +40,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         #region Initialize Variables
+        isGrounded = false;
+
+        baseSpeed = initialSpeed;
+        speed = initialSpeed;
+        UpdateSpeedText();
+
         isJumpCooldown = false;
         #endregion
 
@@ -40,16 +60,50 @@ public class PlayerController : MonoBehaviour
     {
         ApplyGravity();
 
+        #region Glide
+        if (rb.velocity.y < 0f && !isGrounded)
+        {
+            StopCoroutine(ResetToBaseSpeed());
+            speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
+            Debug.Log("ended");
+        }
+        else
+        {
+            StartCoroutine(ResetToBaseSpeed()); //reset to base speed when no longer gliding
+        }
+        #endregion
+
         #region Player Actions
         if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown)
         {
+            isGrounded = false;
+
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(transform.up*jumpForce, ForceMode2D.Impulse);
 
             StartCoroutine(JumpCooldown());
         }
         #endregion
+
+        UpdateSpeedText();
     }
+
+    #region Glide Function
+    private IEnumerator ResetToBaseSpeed()
+    {
+        float elapsedTime = 0f;
+        float startSpeed = speed;
+
+        while (elapsedTime < glideSpeedResetDuration)
+        {
+            speed = Mathf.Lerp(startSpeed, baseSpeed, elapsedTime / glideSpeedResetDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        speed = baseSpeed;
+    }
+    #endregion
 
     #region Jump Functions
 
@@ -63,6 +117,13 @@ public class PlayerController : MonoBehaviour
         isJumpCooldown = true;
         yield return new WaitForSeconds(jumpCooldown);
         isJumpCooldown = false;
+    }
+    #endregion
+
+    #region UI Functions
+    private void UpdateSpeedText()
+    {
+        speedText.text = Mathf.RoundToInt(speed).ToString() + " mph";
     }
     #endregion
 
@@ -88,4 +149,14 @@ public class PlayerController : MonoBehaviour
             return -deltaX;
         }
     }
+
+    #region Collisions
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    #endregion
 }

@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 8798436322676475521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.49900055, y: -0.3695197, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,9 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50812271547e4cc438783c9875af8502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer1: 0
-  gravity: 26
-  jumpForce: 12.5
+  isPlayer1: 1
+  speedText: {fileID: 0}
+  initialSpeed: 30
+  baseSpeed: 0
+  speed: 0
+  glideSpeedIncreaseRate: 14
+  glideSpeedResetDuration: 0.3
+  gravity: 24
+  jumpForce: 13
   jumpCooldown: 0.3
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
@@ -150,4 +156,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
