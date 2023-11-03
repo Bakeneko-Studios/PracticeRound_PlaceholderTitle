@@ -105,9 +105,11 @@ MonoBehaviour:
   initialSpeed: 30
   baseSpeed: 0
   speed: 0
-  glideSpeedIncreaseRate: 22
+  glideSpeedIncreaseRate: 29
   glideSpeedResetDuration: 0.35
+  glideGravityDecreaseRate: 8
   gravity: 24
+  minGravity: 5
   jumpForce: 13
   jumpCooldown: 0.3
   normalOrbSpeedIncrease: 1

@@ -24,9 +24,12 @@ public class PlayerController : MonoBehaviour
     [Header("Gliding")]
     [SerializeField] private float glideSpeedIncreaseRate;
     [SerializeField] private float glideSpeedResetDuration;
+    [SerializeField] private float glideGravityDecreaseRate;
 
     [Header("Jump")]
     [SerializeField] private float gravity;
+    [SerializeField] private float minGravity;
+    private float baseGravity;
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldown;
     private bool isJumpCooldown;
@@ -60,6 +63,8 @@ public class PlayerController : MonoBehaviour
         isJumpCooldown = false;
 
         hops = 0;
+
+        baseGravity = gravity;
         #endregion
 
         #region Assign Components
@@ -78,11 +83,17 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(ResetToBaseSpeed());
             speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
+            if (gravity > minGravity)
+            {
+                gravity -= glideGravityDecreaseRate * Time.deltaTime;
+            }
+
             //Debug.Log("ended");
         }
         else
         {
             StartCoroutine(ResetToBaseSpeed()); //reset to base speed when no longer gliding
+            gravity = baseGravity;
         }
         #endregion
 
