@@ -13,8 +13,11 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI speedText;
 
+    [Header("Zoom")]
+    [SerializeField] private float rightBoundaryWidth;
+
     [Header("Speed")]
-    [SerializeField] private float initialSpeed; //Default speed at game start
+    public float initialSpeed; //Default speed at game start
     [HideInInspector] public float baseSpeed; //Default speed + bonus speed from energy orbs
      public float speed; //Current speed
 
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(ResetToBaseSpeed());
             speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
-            Debug.Log("ended");
+            //Debug.Log("ended");
         }
         else
         {
@@ -86,6 +89,11 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         UpdateSpeedText();
+    }
+
+    public void SetHorizontalSpeed(float speed)
+    {
+        rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
     #region Glide Function
@@ -137,7 +145,7 @@ public class PlayerController : MonoBehaviour
         float cameraHalfWidth = initialCameraSize * mainCamera.aspect;
         //float cameraHalfHeight = initialCameraSize;
 
-        float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth);
+        float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) + rightBoundaryWidth - cameraHalfWidth);
         //float deltaY = Mathf.Max(0, Mathf.Abs(transform.position.y - mainCamera.transform.position.y) - cameraHalfHeight);
 
         if (transform.position.x >= mainCamera.transform.position.x)

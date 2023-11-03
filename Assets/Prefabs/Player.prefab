@@ -101,11 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer1: 1
   speedText: {fileID: 0}
+  rightBoundaryWidth: 12
   initialSpeed: 30
   baseSpeed: 0
   speed: 0
-  glideSpeedIncreaseRate: 14
-  glideSpeedResetDuration: 0.3
+  glideSpeedIncreaseRate: 22
+  glideSpeedResetDuration: 0.35
   gravity: 24
   jumpForce: 13
   jumpCooldown: 0.3
