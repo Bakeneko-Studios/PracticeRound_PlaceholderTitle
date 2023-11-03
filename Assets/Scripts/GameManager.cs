@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private bool isMaxZoom;
 
     [Header("Background")]
-    [SerializeField] private float initialScrollSpeed;
+    public float initialScrollSpeed;
     [SerializeField] private float scrollSpeedIncreaseRate; //one more unit in the player's speed = this much increase in scroll speed
 
     [Header("Player Horizontal Speeds")]
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float initialCameraSize;
     private PlayerController player1Controller;
     private PlayerController player2Controller;
-    private BackgroundScroller backgroundScroller1;
+    [HideInInspector] public BackgroundScroller backgroundScroller1;
     private BackgroundScroller backgroundScroller2;
     private BackgroundScroller backgroundScroller3;
 

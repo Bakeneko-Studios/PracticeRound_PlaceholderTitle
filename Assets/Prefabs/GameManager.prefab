@@ -56,3 +56,4 @@ MonoBehaviour:
   scrollSpeedIncreaseRate: 0.2
   relativeSpeedMultiplier: 1
   initialCameraSize: 0
+  backgroundScroller1: {fileID: 0}
