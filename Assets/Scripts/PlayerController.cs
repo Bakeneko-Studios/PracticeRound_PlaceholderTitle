@@ -30,6 +30,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldown;
     private bool isJumpCooldown;
+
+    [Header("Energy Orb")]
+    [SerializeField] private float normalOrbSpeedIncrease;
+    [SerializeField] private int hopsPerOrb;
+    private int hops;
+    [SerializeField] private float specialEnergyOrbChance; //a decimal as a percentage
+    public GameObject normalEnergyOrb;
+    public GameObject[] specialEnergyOrbList;
     #endregion
 
     #region Component Declaration
@@ -50,6 +58,8 @@ public class PlayerController : MonoBehaviour
         UpdateSpeedText();
 
         isJumpCooldown = false;
+
+        hops = 0;
         #endregion
 
         #region Assign Components
@@ -85,6 +95,13 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(transform.up*jumpForce, ForceMode2D.Impulse);
 
             StartCoroutine(JumpCooldown());
+
+            hops += 1;
+            if (hops == hopsPerOrb)
+            {
+                hops = 0;
+                SpawnEnergyOrb();
+            }
         }
         #endregion
 
@@ -128,6 +145,21 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Energy Orbs
+    private void SpawnEnergyOrb()
+    {
+        if (Random.Range(0f, 1f) >= specialEnergyOrbChance)//spawn normal orb
+        {
+            Instantiate(normalEnergyOrb,transform.position-new Vector3(1.5f,0f,0f),Quaternion.identity);
+        }
+        else if (specialEnergyOrbList.Length>0) //spawn a random special orb
+        {
+            int orbIndex = Random.Range(0, specialEnergyOrbList.Length);
+            Instantiate(specialEnergyOrbList[orbIndex], transform.position - new Vector3(1.5f, 0f, 0f), Quaternion.identity);
+        }
+    }
+    #endregion
+
     #region UI Functions
     private void UpdateSpeedText()
     {
@@ -164,6 +196,15 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Energy Orb"))
+        {
+            baseSpeed += normalOrbSpeedIncrease;
+            Destroy(collision.gameObject);
         }
     }
     #endregion

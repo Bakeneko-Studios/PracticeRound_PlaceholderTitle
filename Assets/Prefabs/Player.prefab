@@ -110,6 +110,11 @@ MonoBehaviour:
   gravity: 24
   jumpForce: 13
   jumpCooldown: 0.3
+  normalOrbSpeedIncrease: 1
+  hopsPerOrb: 1
+  specialEnergyOrbChance: 0
+  normalEnergyOrb: {fileID: 1034021959245197484, guid: 0fc7f8a802ddeba45934572865377f6c, type: 3}
+  specialEnergyOrbList: []
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
 BoxCollider2D:
