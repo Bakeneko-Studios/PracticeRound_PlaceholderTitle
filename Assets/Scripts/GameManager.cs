@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,8 +37,19 @@ public class GameManager : MonoBehaviour
     private float higherSpeed;
     #endregion
 
+    [Header("UI")]
+    public GameObject deathUI;
+    public GameObject deathBoom;
+
+
     #region Component Declaration
     #endregion
+
+    #region Constants
+    private float deathRange;//how much to camera, 25 is out of bounds in 16:9
+    private bool gameOver;
+    #endregion
+
 
     private void Awake()
     {
@@ -56,6 +68,9 @@ public class GameManager : MonoBehaviour
         backgroundScroller1.scrollSpeed = initialScrollSpeed; 
         backgroundScroller2.scrollSpeed = initialScrollSpeed;
         backgroundScroller3.scrollSpeed = initialScrollSpeed;
+
+        gameOver = false;
+        deathRange = -26;
         #endregion
     }
 
@@ -67,7 +82,7 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {      
         checkMaxZoom();
 
         calculateSpeed();
@@ -75,6 +90,10 @@ public class GameManager : MonoBehaviour
         AdjustPlayerSpeed();
 
         AdjustCameraSize();
+
+        PlayerWinCondition();
+
+        Debug.Log(gameOver);
     }
 
     #region Camera Functions
@@ -140,6 +159,31 @@ public class GameManager : MonoBehaviour
             ((player1Controller.speed >= player2Controller.speed) ? player1Controller : player2Controller)
                 .SetHorizontalSpeed(0);
         }
+    }
+    #endregion
+
+    #region Win Codition
+    private void PlayerWinCondition()
+    {
+        if (!gameOver){
+            if (player1Controller.IsOutsideCameraView() < deathRange){
+                Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
+                deathUI.SetActive(true);
+                gameOver = true;  
+            }
+            if (player2Controller.IsOutsideCameraView() < deathRange){
+                Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
+                deathUI.SetActive(true);
+                gameOver = true;
+            }
+        }
+    }
+    public void RestartGame()
+    {
+        //Time.timeScale=1;
+        gameOver = false;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
     #endregion
 }
