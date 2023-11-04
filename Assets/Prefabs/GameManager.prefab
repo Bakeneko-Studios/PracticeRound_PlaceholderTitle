@@ -51,9 +51,11 @@ MonoBehaviour:
   background3: {fileID: 0}
   mainCamera: {fileID: 0}
   cameraZoomSpeed: 2
-  maxZoom: 15
+  maxZoom: 20
   initialScrollSpeed: 3
-  scrollSpeedIncreaseRate: 0.2
+  scrollSpeedIncreaseRate: 0.25
   relativeSpeedMultiplier: 1
   initialCameraSize: 0
   backgroundScroller1: {fileID: 0}
+  deathUI: {fileID: 0}
+  deathBoom: {fileID: 0}

@@ -188,12 +188,12 @@ public class PlayerController : MonoBehaviour
         float cameraHalfWidth = initialCameraSize * mainCamera.aspect;
         //float cameraHalfHeight = initialCameraSize;
 
-        float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) + rightBoundaryWidth - cameraHalfWidth);
+        float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth);
         //float deltaY = Mathf.Max(0, Mathf.Abs(transform.position.y - mainCamera.transform.position.y) - cameraHalfHeight);
 
         if (transform.position.x >= mainCamera.transform.position.x)
         {
-            return deltaX;
+            return deltaX + rightBoundaryWidth;
         }
         else
         {

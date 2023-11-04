@@ -102,7 +102,7 @@ MonoBehaviour:
   isPlayer1: 1
   speedText: {fileID: 0}
   rightBoundaryWidth: 12
-  initialSpeed: 30
+  initialSpeed: 60
   baseSpeed: 0
   speed: 0
   glideSpeedIncreaseRate: 29

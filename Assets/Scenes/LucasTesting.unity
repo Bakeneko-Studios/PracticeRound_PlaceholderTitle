@@ -1153,6 +1153,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1338181563}
     - target: {fileID: 8341473314616580461, guid: a35f8ca5080d12f4aba9dd2d4c593231, type: 3}
+      propertyPath: initialSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341473314616580461, guid: a35f8ca5080d12f4aba9dd2d4c593231, type: 3}
       propertyPath: glideSpeedResetDuration
       value: 0.35
       objectReference: {fileID: 0}
