@@ -41,7 +41,13 @@ public class GameManager : MonoBehaviour
     public GameObject deathUI;
     public GameObject deathBoom;
 
-
+    [Header("Obstacle")]
+    public GameObject tower;
+    [SerializeField] private float minSpawnTowerInterval;
+    [SerializeField] private float maxSpawnTowerInterval;
+    [SerializeField] private float maxTowerY;
+    [SerializeField] private float minTowerY;
+    [SerializeField] private float towerSpawnXPos; //Distance between tower's x pos and the camera's right boundary
     #region Component Declaration
     #endregion
 
@@ -77,7 +83,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(SpawnTowers());
     }
 
     // Update is called once per frame
@@ -162,7 +168,21 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Win Codition
+    #region Obstacle Functions
+    private IEnumerator SpawnTowers()
+    {
+        while (!gameOver)
+        {
+            yield return new WaitForSeconds(Random.Range(minSpawnTowerInterval, maxSpawnTowerInterval));
+
+            float xPos = mainCamera.transform.position.x + 2f * mainCamera.orthographicSize * mainCamera.aspect +towerSpawnXPos;
+            float yPos = Random.Range(minTowerY, maxTowerY);
+            Instantiate(tower, new Vector3(xPos, yPos, 0f), Quaternion.identity);
+        }
+    }
+    #endregion
+
+    #region Win Condition
     private void PlayerWinCondition()
     {
         if (!gameOver){

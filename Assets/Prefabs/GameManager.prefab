@@ -53,9 +53,15 @@ MonoBehaviour:
   cameraZoomSpeed: 2
   maxZoom: 20
   initialScrollSpeed: 3
-  scrollSpeedIncreaseRate: 0.25
+  scrollSpeedIncreaseRate: 0.05
   relativeSpeedMultiplier: 0.75
   initialCameraSize: 0
   backgroundScroller1: {fileID: 0}
   deathUI: {fileID: 0}
   deathBoom: {fileID: 0}
+  tower: {fileID: 409080578534993676, guid: 84c856e912872d14bb675ec417edef4e, type: 3}
+  minSpawnTowerInterval: 1.5
+  maxSpawnTowerInterval: 7.5
+  maxTowerY: -8.5
+  minTowerY: -15.5
+  towerSpawnXPos: 10

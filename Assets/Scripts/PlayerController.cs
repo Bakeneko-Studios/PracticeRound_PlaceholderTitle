@@ -53,6 +53,11 @@ public class PlayerController : MonoBehaviour
     public GameObject normalEnergyOrb;
     public GameObject[] specialEnergyOrbList;
 
+    [Header("Obstacles")]
+    //erializeField] private float towerKnockbackForce;
+    private bool isTouchingTower;
+    [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
+
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
     #endregion
@@ -90,6 +95,8 @@ public class PlayerController : MonoBehaviour
         hops = 0;
 
         baseGravity = gravity;
+
+        isTouchingTower = false;
         #endregion
 
         #region Assign Components
@@ -128,7 +135,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
 
             rb.velocity = new Vector2(rb.velocity.x, 0f);
-            rb.AddForce(transform.up*jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(transform.up*jumpForce*(isTouchingTower?touchingTowerJumpBoost:1f), ForceMode2D.Impulse);
 
             StartCoroutine(JumpCooldown());
 
@@ -147,7 +154,10 @@ public class PlayerController : MonoBehaviour
 
     public void SetHorizontalSpeed(float speed)
     {
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        if (!isTouchingTower)
+        {
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+        }
     }
 
     #region Glide Function
@@ -324,6 +334,19 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             baseSpeed -= touchGroundSpeedPenalty;
             UpdateSpeedIncreaseText("-"+touchGroundSpeedPenalty);
+        }
+        else if (collision.gameObject.CompareTag("Tower"))
+        {
+            isTouchingTower = true;
+            //rb.AddForce(new Vector2(-towerKnockbackForce, 0f), ForceMode2D.Impulse);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Tower"))
+        {
+            isTouchingTower = false;
         }
     }
 

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyOrbController : MonoBehaviour
+public class ObjectScroller : MonoBehaviour
 {
 
-    [SerializeField] private float initialSpeed;
+    private float initialSpeed=8.4f;
     private float speed;
     private Rigidbody2D rb;
 
     private GameManager gameManager;
 
-    [SerializeField] private float selfDestructTime;
+    private float selfDestructTime = 30f;
     // Start is called before the first frame update
     void Start()
     {
