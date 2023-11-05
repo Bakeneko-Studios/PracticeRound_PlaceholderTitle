@@ -12,6 +12,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI speedText;
+    public TextMeshProUGUI speedIncreaseText;
+    [SerializeField] private float speedIncreaseTextAppearDuration;
+    private Animator speedIncreaseTextAnimator;
+    private bool isSpeedIncreaseTextAppearing;
+    /*
+    [SerializeField] private float rainbowTextSpeed;
+    private float rainbowTextUpperBound;
+    private float rainbowTextLowerBound;
+    private string currentColor;
+    private float colorDirection;
+    */
 
     [Header("Zoom")]
     [SerializeField] private float rightBoundaryWidth;
@@ -41,6 +52,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float specialEnergyOrbChance; //a decimal as a percentage
     public GameObject normalEnergyOrb;
     public GameObject[] specialEnergyOrbList;
+
+    [Header("Misc")]
+    [SerializeField] private float touchGroundSpeedPenalty;
     #endregion
 
     #region Component Declaration
@@ -59,6 +73,17 @@ public class PlayerController : MonoBehaviour
         baseSpeed = initialSpeed;
         speed = initialSpeed;
         UpdateSpeedText();
+
+        speedIncreaseTextAnimator = speedIncreaseText.GetComponent<Animator>();
+        isSpeedIncreaseTextAppearing = false;
+
+        /*
+        rainbowTextUpperBound = isPlayer1 ? 185f : 185f;
+        rainbowTextLowerBound = isPlayer1 ? 0f : 0f;
+        currentColor = isPlayer1 ? "R" : "G";
+        colorDirection = isPlayer1 ? 1f : -1f;
+        speedIncreaseText.fontSharedMaterial.SetColor(ShaderUtilities.ID_GlowColor,isPlayer1 ? new Color(0f,185,6f,255f):new Color(185f,185f,0f));
+        */
 
         isJumpCooldown = false;
 
@@ -117,6 +142,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         UpdateSpeedText();
+        //SetSpeedIncreaseTextColor();
     }
 
     public void SetHorizontalSpeed(float speed)
@@ -174,8 +200,97 @@ public class PlayerController : MonoBehaviour
     #region UI Functions
     private void UpdateSpeedText()
     {
+        /*
+        int difference = Mathf.RoundToInt(speed)-int.Parse(speedText.text.Substring(0, speedText.text.Length - 4));
+        if (difference > 0)
+        {
+            UpdateSpeedIncreaseText("+" + difference);
+        }
+        else if (difference < 0)
+        {
+            UpdateSpeedIncreaseText(difference.ToString());
+        }
+        */
+
         speedText.text = Mathf.RoundToInt(speed).ToString() + " mph";
     }
+
+    private void UpdateSpeedIncreaseText(string text)
+    {
+        StopCoroutine(DeactivateSpeedIncreaseText());
+        StartCoroutine(DeactivateSpeedIncreaseText());
+
+        if (!isSpeedIncreaseTextAppearing)
+        {
+            speedIncreaseText.text = "+0";
+            speedIncreaseTextAnimator.SetTrigger("Activate");
+        }
+        isSpeedIncreaseTextAppearing = true;
+
+        if (speedIncreaseText.text[0]==text[0])
+        {
+            speedIncreaseText.text = speedIncreaseText.text[0] + (int.Parse(speedIncreaseText.text.Substring(1))+int.Parse(text.Substring(1))).ToString();
+        }
+        else
+        {
+            speedIncreaseText.text = text;
+        }
+        //Debug.Log(speedIncreaseText.text);
+    }
+
+    private IEnumerator DeactivateSpeedIncreaseText()
+    {
+        yield return new WaitForSeconds(speedIncreaseTextAppearDuration);
+
+        isSpeedIncreaseTextAppearing = false;
+        speedIncreaseTextAnimator.SetTrigger("Deactivate");
+        //Debug.Log("stopped");
+    }
+
+    /*
+    private void SetSpeedIncreaseTextColor()
+    {
+        if (speedIncreaseText.text[0].ToString() == "+")//Set Rainbow Text
+        {
+            Color newColor;
+            if (currentColor == "R")
+            {
+                newColor = new Color(colorDirection* rainbowTextSpeed, 0f, 0f);
+                if (speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).r<=0 || speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).r >= rainbowTextUpperBound)
+                {
+                    colorDirection = -colorDirection;
+                    currentColor = "G";
+                }
+            }
+            else if (currentColor == "G")
+            {
+                newColor = new Color(0f, colorDirection* rainbowTextSpeed, 0f);
+                if (speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).g <= 0 || speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).g >= rainbowTextUpperBound)
+                {
+                    colorDirection = -colorDirection;
+                    currentColor = "B";
+                }
+            }
+            else
+            {
+                newColor = new Color(0f, 0f, colorDirection*rainbowTextSpeed);
+                if (speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).b <= 0 || speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor).b >= rainbowTextUpperBound)
+                {
+                    colorDirection = -colorDirection;
+                    currentColor = "R";
+                }
+            }
+            //Debug.Log(newColor);
+            newColor += speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor);
+            speedIncreaseText.fontSharedMaterial.SetColor(ShaderUtilities.ID_GlowColor, newColor);
+            Debug.Log(speedIncreaseText.fontSharedMaterial.GetColor(ShaderUtilities.ID_GlowColor));
+        }
+        else
+        {
+
+        }
+    }
+    */  
     #endregion
 
     public float IsOutsideCameraView()
@@ -207,6 +322,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            baseSpeed -= touchGroundSpeedPenalty;
+            UpdateSpeedIncreaseText("-"+touchGroundSpeedPenalty);
         }
     }
 
@@ -215,6 +332,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Energy Orb"))
         {
             baseSpeed += normalOrbSpeedIncrease;
+            UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
             Destroy(collision.gameObject);
         }
     }

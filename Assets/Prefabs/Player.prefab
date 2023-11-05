@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer1: 1
   speedText: {fileID: 0}
+  speedIncreaseText: {fileID: 0}
+  speedIncreaseTextAppearDuration: 4
   rightBoundaryWidth: 12
   initialSpeed: 60
   baseSpeed: 0
@@ -117,6 +119,7 @@ MonoBehaviour:
   specialEnergyOrbChance: 0
   normalEnergyOrb: {fileID: 1034021959245197484, guid: 0fc7f8a802ddeba45934572865377f6c, type: 3}
   specialEnergyOrbList: []
+  touchGroundSpeedPenalty: 5
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
 BoxCollider2D:

@@ -54,7 +54,7 @@ MonoBehaviour:
   maxZoom: 20
   initialScrollSpeed: 3
   scrollSpeedIncreaseRate: 0.25
-  relativeSpeedMultiplier: 1
+  relativeSpeedMultiplier: 0.75
   initialCameraSize: 0
   backgroundScroller1: {fileID: 0}
   deathUI: {fileID: 0}

@@ -116,11 +116,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Player2SpeedFont
+  m_Name: Player2Speed
   m_EditorClassIdentifier: 
-  hashCode: -1460594603
+  hashCode: -1449624252
   material: {fileID: -2364412313864689202}
-  materialHashCode: 1269688405
+  materialHashCode: 956014052
   m_Version: 1.1.0
   m_SourceFontFileGUID: 72cce38f5b8d8fc4d96728f13ba9208c
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 72cce38f5b8d8fc4d96728f13ba9208c, type: 3}

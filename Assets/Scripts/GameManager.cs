@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
         PlayerWinCondition();
 
-        Debug.Log(gameOver);
+        //Debug.Log(gameOver);
     }
 
     #region Camera Functions
@@ -138,9 +138,9 @@ public class GameManager : MonoBehaviour
 
     private void AdjustBackgroundScrollSpeed()
     {
-        backgroundScroller1.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed - player1Controller.initialSpeed);
-        backgroundScroller2.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed - player1Controller.initialSpeed);
-        backgroundScroller3.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed - player1Controller.initialSpeed);
+        backgroundScroller1.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        backgroundScroller2.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed );
+        backgroundScroller3.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
     }
 
     private void AdjustPlayerSpeed()
@@ -169,12 +169,14 @@ public class GameManager : MonoBehaviour
             if (player1Controller.IsOutsideCameraView() < deathRange){
                 Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
                 deathUI.SetActive(true);
-                gameOver = true;  
+                gameOver = true;
+                //Time.timeScale = 0;
             }
             if (player2Controller.IsOutsideCameraView() < deathRange){
                 Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
                 deathUI.SetActive(true);
                 gameOver = true;
+                //Time.timeScale = 0;
             }
         }
     }
