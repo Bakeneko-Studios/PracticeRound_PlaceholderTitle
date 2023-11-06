@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     //erializeField] private float towerKnockbackForce;
     private bool isTouchingTower;
     [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
+    [SerializeField] private float touchBatSwarmSpeedPenalty;
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
@@ -357,6 +358,11 @@ public class PlayerController : MonoBehaviour
             baseSpeed += normalOrbSpeedIncrease;
             UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
             Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            baseSpeed -= touchBatSwarmSpeedPenalty;
+            UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
         }
     }
     #endregion

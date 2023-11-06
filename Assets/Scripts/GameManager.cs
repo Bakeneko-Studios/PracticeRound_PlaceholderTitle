@@ -41,13 +41,31 @@ public class GameManager : MonoBehaviour
     public GameObject deathUI;
     public GameObject deathBoom;
 
-    [Header("Obstacle")]
+    [Header("Tower")]
     public GameObject tower;
     [SerializeField] private float minSpawnTowerInterval;
     [SerializeField] private float maxSpawnTowerInterval;
     [SerializeField] private float maxTowerY;
     [SerializeField] private float minTowerY;
     [SerializeField] private float towerSpawnXPos; //Distance between tower's x pos and the camera's right boundary
+
+    [Header("Other Obstacles")]
+    [SerializeField] private float initialObstacleIntensity;
+    [SerializeField] private float obstacleIntensityIncreaseRate; //amount the obstacle intensity increases by
+    [SerializeField] private float obstacleIntensityIncreaseInterval; //interval (seconds) at which obstacle internsity increases
+    private float obstacleIntensity;
+    private float actualObstacleIntensity; // equals 1 / obstacleIntensity
+    [SerializeField] private float minSpawnObstacleInterval;
+    [SerializeField] private float maxSpawnObstacleInterval;
+    public GameObject batSwarm;
+    [SerializeField] private float doubleBatBaseChance;
+    [SerializeField] private float tripleBatBaseChance;
+    [SerializeField] private float quadrupleBatBaseChance;
+    [SerializeField] private float maxBatSwarmY;
+    [SerializeField] private float minBatSwarmY;
+    [SerializeField] private float maxBatSwarmX;
+    [SerializeField] private float minBatSwarmX;
+
     #region Component Declaration
     #endregion
 
@@ -77,6 +95,9 @@ public class GameManager : MonoBehaviour
 
         gameOver = false;
         deathRange = -26;
+
+        obstacleIntensity = initialObstacleIntensity;
+        actualObstacleIntensity = 1f / obstacleIntensity;
         #endregion
     }
 
@@ -84,6 +105,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnTowers());
+        StartCoroutine(IncreaseObstacleIntensity());
+        StartCoroutine(SpawnObstacles());
     }
 
     // Update is called once per frame
@@ -178,6 +201,63 @@ public class GameManager : MonoBehaviour
             float xPos = mainCamera.transform.position.x + 2f * mainCamera.orthographicSize * mainCamera.aspect +towerSpawnXPos;
             float yPos = Random.Range(minTowerY, maxTowerY);
             Instantiate(tower, new Vector3(xPos, yPos, 0f), Quaternion.identity);
+        }
+    }
+
+    private IEnumerator IncreaseObstacleIntensity()
+    {
+        while (!gameOver)
+        {
+            yield return new WaitForSeconds(obstacleIntensityIncreaseInterval);
+
+            obstacleIntensity += obstacleIntensityIncreaseRate;
+            actualObstacleIntensity = 1f / obstacleIntensity;
+        }
+    }
+
+    private IEnumerator SpawnObstacles()
+    {
+        while (!gameOver)
+        {
+            yield return new WaitForSeconds(Random.Range(minSpawnObstacleInterval, maxSpawnObstacleInterval) * actualObstacleIntensity);
+
+            int obstacleToSpawn = Random.Range(0, 1);
+            
+            if (obstacleToSpawn == 0) 
+            {
+                SpawnBat();
+            }
+        }
+    }
+
+    private void SpawnBat()
+    {
+        float random = Random.Range(0f, 1f);
+        int numberOfBats;
+
+        if (random <= quadrupleBatBaseChance* actualObstacleIntensity) //Spawn 4 Bats
+        {
+            numberOfBats = 4;
+        }
+        else if (random <= (quadrupleBatBaseChance + tripleBatBaseChance) * actualObstacleIntensity) //Spawn 3 Bats
+        {
+            numberOfBats = 3;
+        }
+        else if (random <= (quadrupleBatBaseChance + tripleBatBaseChance + doubleBatBaseChance) * actualObstacleIntensity) //Spawn 2 Bats
+        {
+            numberOfBats = 2;
+        }
+        else
+        {
+            numberOfBats = 1;
+        }
+
+        for (int i = 0; i < numberOfBats; i++)
+        {
+            Instantiate(batSwarm, new Vector3(
+                mainCamera.transform.position.x + 2f * mainCamera.orthographicSize * mainCamera.aspect + Random.Range(minBatSwarmX, maxBatSwarmX),
+                Random.Range(minBatSwarmY, maxBatSwarmY), 0f),
+                Quaternion.identity);
         }
     }
     #endregion
