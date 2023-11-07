@@ -49,6 +49,8 @@ MonoBehaviour:
   background1: {fileID: 0}
   background2: {fileID: 0}
   background3: {fileID: 0}
+  background4: {fileID: 0}
+  background5: {fileID: 0}
   mainCamera: {fileID: 0}
   cameraZoomSpeed: 2
   maxZoom: 25
@@ -58,13 +60,14 @@ MonoBehaviour:
   relativeSpeedMultiplier: 0.45
   initialCameraSize: 0
   backgroundScroller1: {fileID: 0}
-  deathUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  gameOverText: {fileID: 0}
   deathBoom: {fileID: 0}
   progressBar: {fileID: 0}
   player1ProgressIcon: {fileID: 0}
   player2ProgressIcon: {fileID: 0}
-  progressIconInitialX: -75.5
-  progressIconFinalX: 75.5
+  progressIconInitialX: -72.44
+  progressIconFinalX: 82.5
   tower: {fileID: 409080578534993676, guid: 84c856e912872d14bb675ec417edef4e, type: 3}
   minSpawnTowerInterval: 1.5
   maxSpawnTowerInterval: 7.5

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     public GameObject background1;
     public GameObject background2;
     public GameObject background3;
+    public GameObject background4;
+    public GameObject background5;
 
     [Header("Camera")]
     [HideInInspector] public Camera mainCamera;
@@ -38,12 +41,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public BackgroundScroller backgroundScroller1;
     private BackgroundScroller backgroundScroller2;
     private BackgroundScroller backgroundScroller3;
+    private BackgroundScroller backgroundScroller4;
+    private BackgroundScroller backgroundScroller5;
 
     private float relativeSpeed;
     private float higherSpeed;
 
     [Header("UI")]
-    public GameObject deathUI;
+    public GameObject gameOverUI;
+    public TextMeshProUGUI gameOverText;
     public GameObject deathBoom;
     public Slider progressBar;
     public RectTransform player1ProgressIcon;
@@ -100,10 +106,14 @@ public class GameManager : MonoBehaviour
         backgroundScroller1 = background1.GetComponent<BackgroundScroller>();
         backgroundScroller2 = background2.GetComponent<BackgroundScroller>();
         backgroundScroller3 = background3.GetComponent<BackgroundScroller>();
+        backgroundScroller4 = background4.GetComponent<BackgroundScroller>();
+        backgroundScroller5 = background5.GetComponent<BackgroundScroller>();
 
         backgroundScroller1.scrollSpeed = initialScrollSpeed; 
         backgroundScroller2.scrollSpeed = initialScrollSpeed;
         backgroundScroller3.scrollSpeed = initialScrollSpeed;
+        backgroundScroller4.scrollSpeed = initialScrollSpeed;
+        backgroundScroller5.scrollSpeed = initialScrollSpeed;
 
         player1Progress = 0f;
         player2Progress = 0f;
@@ -151,13 +161,17 @@ public class GameManager : MonoBehaviour
         player1Progress += player1Controller.speed * Time.deltaTime;
         player2Progress += player2Controller.speed * Time.deltaTime;
 
-        if (player1Progress >= mapLength || player2Progress >= mapLength)
+        if (player1Progress >= mapLength) 
         {
-            //TODO: Finish line and win
+            EndGame(1);
+        }
+        else if (player2Progress >= mapLength)
+        {
+            EndGame(2);
         }
         progressBar.value = (player1Progress >= player2Progress ? player1Progress : player2Progress)/mapLength;
-        player1ProgressIcon.anchoredPosition += new Vector2(progressIconXDistance*(player1Controller.speed * Time.deltaTime)/mapLength,0f);
-        player2ProgressIcon.anchoredPosition += new Vector2(progressIconXDistance * (player2Controller.speed * Time.deltaTime) / mapLength, 0f);
+        player1ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX+progressIconXDistance*(player1Progress)/mapLength,0f);
+        player2ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX + progressIconXDistance * (player2Progress) / mapLength, 0f);
     }
 
     #region Camera Functions
@@ -205,6 +219,8 @@ public class GameManager : MonoBehaviour
         backgroundScroller1.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
         backgroundScroller2.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed );
         backgroundScroller3.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        backgroundScroller4.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        backgroundScroller5.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
     }
 
     private void AdjustPlayerSpeed()
@@ -303,17 +319,22 @@ public class GameManager : MonoBehaviour
         if (!gameOver){
             if (player1Controller.IsOutsideCameraView() < deathRange){
                 Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
-                deathUI.SetActive(true);
-                gameOver = true;
+                EndGame(2);
                 //Time.timeScale = 0;
             }
             if (player2Controller.IsOutsideCameraView() < deathRange){
                 Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
-                deathUI.SetActive(true);
-                gameOver = true;
+                EndGame(1);
                 //Time.timeScale = 0;
             }
         }
+    }
+
+    private void EndGame(int winner)
+    {
+        gameOverUI.SetActive(true);
+        gameOverText.text = "Player " + winner + " Wins";
+        gameOver = true;
     }
     public void RestartGame()
     {
