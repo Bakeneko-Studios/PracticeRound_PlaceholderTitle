@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class GameManager : MonoBehaviour
     public float initialScrollSpeed;
     [SerializeField] private float scrollSpeedIncreaseRate; //one more unit in the player's speed = this much increase in scroll speed
 
+    [Header("Map")]
+    [SerializeField] private float mapLength;
+    private float player1Progress;
+    private float player2Progress;
+
     [Header("Player Horizontal Speeds")]
     [SerializeField] private float relativeSpeedMultiplier; //player horizontal speed = relative speed * multiplier
 
@@ -35,11 +41,16 @@ public class GameManager : MonoBehaviour
 
     private float relativeSpeed;
     private float higherSpeed;
-    #endregion
 
     [Header("UI")]
     public GameObject deathUI;
     public GameObject deathBoom;
+    public Slider progressBar;
+    public RectTransform player1ProgressIcon;
+    public RectTransform player2ProgressIcon;
+    [SerializeField] private float progressIconInitialX;
+    [SerializeField] private float progressIconFinalX;
+    private float progressIconXDistance;
 
     [Header("Tower")]
     public GameObject tower;
@@ -65,6 +76,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minBatSwarmY;
     [SerializeField] private float maxBatSwarmX;
     [SerializeField] private float minBatSwarmX;
+    #endregion
 
     #region Component Declaration
     #endregion
@@ -93,6 +105,13 @@ public class GameManager : MonoBehaviour
         backgroundScroller2.scrollSpeed = initialScrollSpeed;
         backgroundScroller3.scrollSpeed = initialScrollSpeed;
 
+        player1Progress = 0f;
+        player2Progress = 0f;
+        progressBar.value = 0f;
+        player1ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX, player1ProgressIcon.anchoredPosition.y);
+        player2ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX, player2ProgressIcon.anchoredPosition.y);
+        progressIconXDistance = progressIconFinalX - progressIconInitialX;
+
         gameOver = false;
         deathRange = -26;
 
@@ -118,11 +137,27 @@ public class GameManager : MonoBehaviour
         AdjustBackgroundScrollSpeed();
         AdjustPlayerSpeed();
 
+        UpdatePlayerProgress();
+
         AdjustCameraSize();
 
         PlayerWinCondition();
 
         //Debug.Log(gameOver);
+    }
+
+    private void UpdatePlayerProgress()
+    {
+        player1Progress += player1Controller.speed * Time.deltaTime;
+        player2Progress += player2Controller.speed * Time.deltaTime;
+
+        if (player1Progress >= mapLength || player2Progress >= mapLength)
+        {
+            //TODO: Finish line and win
+        }
+        progressBar.value = (player1Progress >= player2Progress ? player1Progress : player2Progress)/mapLength;
+        player1ProgressIcon.anchoredPosition += new Vector2(progressIconXDistance*(player1Controller.speed * Time.deltaTime)/mapLength,0f);
+        player2ProgressIcon.anchoredPosition += new Vector2(progressIconXDistance * (player2Controller.speed * Time.deltaTime) / mapLength, 0f);
     }
 
     #region Camera Functions

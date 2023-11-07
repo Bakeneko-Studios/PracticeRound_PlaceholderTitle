@@ -961,6 +961,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7591910266186524123, guid: 00649bff5c4a4034aab801bc400c5c20, type: 3}
   m_PrefabInstance: {fileID: 1637241341}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1740284454 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1740284454, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+  m_PrefabInstance: {fileID: 6174242270384019984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1764982421 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1764982421, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
@@ -972,6 +977,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2008003553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2008003553, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+  m_PrefabInstance: {fileID: 6174242270384019984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &2065239882 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2065239882, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+  m_PrefabInstance: {fileID: 6174242270384019984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1310862992971862606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1051,6 +1072,18 @@ PrefabInstance:
       propertyPath: background3
       value: 
       objectReference: {fileID: 1637241343}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: progressBar
+      value: 
+      objectReference: {fileID: 2008003553}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: player1ProgressIcon
+      value: 
+      objectReference: {fileID: 2065239882}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: player2ProgressIcon
+      value: 
+      objectReference: {fileID: 1740284454}
     - target: {fileID: 1310862991986005495, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1121,21 +1154,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 53843163, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontColor.a
-      value: 1
+    - target: {fileID: 1740284453, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_Name
+      value: Player2ProgressIcon
       objectReference: {fileID: 0}
-    - target: {fileID: 53843163, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 16777215
+    - target: {fileID: 1740284454, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
       objectReference: {fileID: 0}
-    - target: {fileID: 1764982421, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontColor.a
-      value: 1
+    - target: {fileID: 1740284454, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
       objectReference: {fileID: 0}
-    - target: {fileID: 1764982421, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 16777215
+    - target: {fileID: 1740284454, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974544906, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065239881, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_Name
+      value: Player1ProgressIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065239882, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065239882, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065239882, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065239882, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 75.6
       objectReference: {fileID: 0}
     - target: {fileID: 6174242269700368801, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
       propertyPath: m_Pivot.x
