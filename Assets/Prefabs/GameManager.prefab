@@ -69,6 +69,8 @@ MonoBehaviour:
   player2ProgressIcon: {fileID: 0}
   progressIconInitialX: -72.44
   progressIconFinalX: 82.5
+  pauseIndicationText: {fileID: 0}
+  unpauseText: {fileID: 0}
   tower: {fileID: 409080578534993676, guid: 84c856e912872d14bb675ec417edef4e, type: 3}
   minSpawnTowerInterval: 1.5
   maxSpawnTowerInterval: 7.5

@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &5518059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5518059, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+  m_PrefabInstance: {fileID: 6174242270384019984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &53843163 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 53843163, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
@@ -665,6 +676,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7591910266186524127, guid: 00649bff5c4a4034aab801bc400c5c20, type: 3}
   m_PrefabInstance: {fileID: 995729884}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1111236122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1111236122, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
+  m_PrefabInstance: {fileID: 6174242270384019984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1253267678 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6174242269416358606, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
@@ -1115,9 +1131,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2008003553}
     - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: unpauseText
+      value: 
+      objectReference: {fileID: 5518059}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: gameOverText
       value: 
       objectReference: {fileID: 189777326}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: pauseIndicationText
+      value: 
+      objectReference: {fileID: 1111236122}
     - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: player1ProgressIcon
       value: 

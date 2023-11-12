@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float progressIconInitialX;
     [SerializeField] private float progressIconFinalX;
     private float progressIconXDistance;
+    public GameObject pauseIndicationText;
+    public TextMeshProUGUI unpauseText;
 
     [Header("Tower")]
     public GameObject tower;
@@ -83,9 +86,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minBatSwarmY;
     [SerializeField] private float maxBatSwarmX;
     [SerializeField] private float minBatSwarmX;
+
+    private bool isPaused;
     #endregion
 
     #region Component Declaration
+    Keyboard kb;
     #endregion
 
     #region Constants
@@ -128,6 +134,10 @@ public class GameManager : MonoBehaviour
 
         obstacleIntensity = initialObstacleIntensity;
         actualObstacleIntensity = 1f / obstacleIntensity;
+
+        kb = Keyboard.current;
+
+        isPaused = false;
         #endregion
     }
 
@@ -154,8 +164,45 @@ public class GameManager : MonoBehaviour
 
         PlayerWinCondition();
 
+        if (kb.escapeKey.wasPressedThisFrame)
+        {
+            Pause();
+        }
         //Debug.Log(gameOver);
     }
+
+    #region Pause Functions
+    private void Pause()
+    {
+        if (!isPaused)
+        {
+            pauseIndicationText.SetActive(false);
+            //TODO: Show pause menu
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+        else
+        {
+            StartCoroutine(Unpause());
+            //TODO: Hide pause menu
+        }
+    }
+
+    private IEnumerator Unpause()
+    {
+        unpauseText.gameObject.SetActive(true);
+        unpauseText.text = "3";
+        yield return new WaitForSecondsRealtime(1);
+        unpauseText.text = "2";
+        yield return new WaitForSecondsRealtime(1);
+        unpauseText.text = "1";
+        yield return new WaitForSecondsRealtime(1);
+        unpauseText.gameObject.SetActive(false);
+        pauseIndicationText.SetActive(true);
+        Time.timeScale = 1;
+        isPaused = false;
+    }
+    #endregion
 
     private void UpdatePlayerProgress()
     {
