@@ -364,6 +364,10 @@ public class PlayerController : MonoBehaviour
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
         }
+        else if (collision.gameObject.CompareTag("Finish Line"))
+        {
+            gameManager.EndGame((isPlayer1) ? 1 : 2);
+        }
     }
     #endregion
 }

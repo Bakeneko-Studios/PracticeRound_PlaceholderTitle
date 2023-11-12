@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 0}
   player2: {fileID: 0}
+  finishLine: {fileID: 0}
   background1: {fileID: 0}
   background2: {fileID: 0}
   background3: {fileID: 0}

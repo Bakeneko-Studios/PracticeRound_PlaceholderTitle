@@ -8,9 +8,10 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     #region Variable Declaration
-    [Header("GameObjects")]
+    [Header("Misc GameObjects")]
     public GameObject player1;
     public GameObject player2;
+    public GameObject finishLine;
     public GameObject background1;
     public GameObject background2;
     public GameObject background3;
@@ -161,14 +162,11 @@ public class GameManager : MonoBehaviour
         player1Progress += player1Controller.speed * Time.deltaTime;
         player2Progress += player2Controller.speed * Time.deltaTime;
 
-        if (player1Progress >= mapLength) 
+        if (player1Progress >= mapLength || player2Progress >= mapLength) 
         {
-            EndGame(1);
+            finishLine.SetActive(true);
         }
-        else if (player2Progress >= mapLength)
-        {
-            EndGame(2);
-        }
+
         progressBar.value = (player1Progress >= player2Progress ? player1Progress : player2Progress)/mapLength;
         player1ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX+progressIconXDistance*(player1Progress)/mapLength,0f);
         player2ProgressIcon.anchoredPosition = new Vector2(progressIconInitialX + progressIconXDistance * (player2Progress) / mapLength, 0f);
@@ -330,7 +328,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndGame(int winner)
+    public void EndGame(int winner)
     {
         gameOverUI.SetActive(true);
         gameOverText.text = "Player " + winner + " Wins";
