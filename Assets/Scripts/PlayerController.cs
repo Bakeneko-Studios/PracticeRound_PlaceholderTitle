@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
     private float colorDirection;
     */
 
+    [Header("Obstacles")]
+    [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
+    [SerializeField] private float touchBatSwarmSpeedPenalty;
+    private bool isTouchingTower;
+
     [Header("Zoom")]
     [SerializeField] private float rightBoundaryWidth;
 
@@ -53,14 +58,20 @@ public class PlayerController : MonoBehaviour
     public GameObject normalEnergyOrb;
     public GameObject[] specialEnergyOrbList;
 
-    [Header("Obstacles")]
-    //erializeField] private float towerKnockbackForce;
-    private bool isTouchingTower;
-    [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
-    [SerializeField] private float touchBatSwarmSpeedPenalty;
+    private enum Spell
+    {
+        unequipped, thunderbolt, dash, ice, shield
+    }
+    private Spell equippedSpell;
+    [Header("Spells")]
+    public GameObject thunderbolt;
+    [SerializeField] private float thunderboltAppearDuration;
+    [SerializeField] private float thunderboltSpeedPenalty;
+    [SerializeField] private float thunderboltStunDuration;
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
+    private bool isStunned;
     #endregion
 
     #region Component Declaration
@@ -98,6 +109,10 @@ public class PlayerController : MonoBehaviour
         baseGravity = gravity;
 
         isTouchingTower = false;
+
+        equippedSpell = Spell.unequipped;
+
+        isStunned = false;
         #endregion
 
         #region Assign Components
@@ -131,7 +146,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         #region Player Actions
-        if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown)
+        if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown && !isStunned) //Jump
         {
             isGrounded = false;
 
@@ -146,6 +161,26 @@ public class PlayerController : MonoBehaviour
                 hops = 0;
                 SpawnEnergyOrb();
             }
+        }
+
+        if ((isPlayer1 ? kb.wKey.wasPressedThisFrame : kb.pKey.wasPressedThisFrame)&&!isStunned)//Cast Spell
+        {
+            switch (equippedSpell)
+            {
+                case Spell.thunderbolt:
+                    StartCoroutine(CastThunderbolt());
+                    break;
+                case Spell.dash:
+                    Dash();
+                    break;
+                case Spell.ice:
+                    IceSpell();
+                    break;
+                case Spell.shield:
+                    Shield();
+                    break;
+            }
+            equippedSpell = Spell.unequipped;
         }
         #endregion
 
@@ -203,8 +238,43 @@ public class PlayerController : MonoBehaviour
         else if (specialEnergyOrbList.Length>0) //spawn a random special orb
         {
             int orbIndex = Random.Range(0, specialEnergyOrbList.Length);
+            //Debug.Log(orbIndex);
             Instantiate(specialEnergyOrbList[orbIndex], transform.position - new Vector3(1.5f, 0f, 0f), Quaternion.identity);
         }
+    }
+    #endregion
+
+    #region Spell Functions
+    private IEnumerator CastThunderbolt()
+    {
+        thunderbolt.SetActive(true);
+        yield return new WaitForSeconds(thunderboltAppearDuration);
+        thunderbolt.SetActive(false);
+    }
+
+    private IEnumerator GetHitThunderbolt()
+    {
+        baseSpeed -= thunderboltSpeedPenalty;
+        UpdateSpeedIncreaseText("-" + thunderboltSpeedPenalty);
+        Debug.Log("Hit");
+        isStunned = true;
+        yield return new WaitForSeconds(thunderboltStunDuration);
+        isStunned = false;
+    }
+
+    private void Dash()
+    {
+
+    }
+
+    private void IceSpell()
+    {
+
+    }
+
+    private void Shield()
+    {
+
     }
     #endregion
 
@@ -357,6 +427,8 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed += normalOrbSpeedIncrease;
             UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
+            
+
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
@@ -368,6 +440,35 @@ public class PlayerController : MonoBehaviour
         {
             gameManager.EndGame((isPlayer1) ? 1 : 2);
         }
-    }
+
+        switch (collision.gameObject.name)
+        {
+            case "ThunderboltEnergyOrb":
+                equippedSpell = Spell.thunderbolt;
+                break;
+            case "DashEnergyOrb":
+                equippedSpell = Spell.dash;
+                break;
+            case "IceEnergyOrb":
+                equippedSpell = Spell.ice;
+                break;
+            case "ShieldEnergyOrb":
+                equippedSpell = Spell.shield;
+                break;
+
+            case "P1Thunderbolt":
+                if (!isPlayer1)
+                {
+                    StartCoroutine(GetHitThunderbolt());
+                }
+                break;
+            case "P2Thunderbolt":
+                if (isPlayer1)
+                {
+                    StartCoroutine(GetHitThunderbolt());
+                }
+                break;
+        }
+     }
     #endregion
 }
