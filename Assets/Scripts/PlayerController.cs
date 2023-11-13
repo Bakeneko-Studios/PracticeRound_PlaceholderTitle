@@ -68,6 +68,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float thunderboltAppearDuration;
     [SerializeField] private float thunderboltSpeedPenalty;
     [SerializeField] private float thunderboltStunDuration;
+    [SerializeField] private float dashDuration;
+    [SerializeField] private float dashSpeedIncrease;
+    private bool isDashing;
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
@@ -76,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     #region Component Declaration
     private Rigidbody2D rb;
+    private Collider2D collider;
     Keyboard kb;
 
     public GameManager gameManager;
@@ -113,10 +117,12 @@ public class PlayerController : MonoBehaviour
         equippedSpell = Spell.unequipped;
 
         isStunned = false;
+        isDashing = false;
         #endregion
 
         #region Assign Components
         rb = gameObject.GetComponent<Rigidbody2D>();
+        collider = gameObject.GetComponent<Collider2D>();
         kb = Keyboard.current;
         #endregion
     }
@@ -127,26 +133,34 @@ public class PlayerController : MonoBehaviour
         ApplyGravity();
 
         #region Glide
-        if (rb.velocity.y < 0f && !isGrounded)
+        if (!isDashing)
         {
-            StopCoroutine(ResetToBaseSpeed());
-            speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
-            if (gravity > minGravity)
+            if (rb.velocity.y < 0f && !isGrounded)
             {
-                gravity -= glideGravityDecreaseRate * Time.deltaTime;
-            }
+                StopCoroutine(ResetToBaseSpeed());
+                speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
+                if (gravity > minGravity)
+                {
+                    gravity -= glideGravityDecreaseRate * Time.deltaTime;
+                }
 
-            //Debug.Log("ended");
+                //Debug.Log("ended");
+            }
+            else
+            {
+                StartCoroutine(ResetToBaseSpeed()); //reset to base speed when no longer gliding
+                gravity = baseGravity;
+            }
         }
         else
         {
-            StartCoroutine(ResetToBaseSpeed()); //reset to base speed when no longer gliding
-            gravity = baseGravity;
+            StopCoroutine(ResetToBaseSpeed());
         }
+        
         #endregion
 
         #region Player Actions
-        if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown && !isStunned) //Jump
+        if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown && !isStunned &&!isDashing) //Jump
         {
             isGrounded = false;
 
@@ -163,7 +177,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if ((isPlayer1 ? kb.wKey.wasPressedThisFrame : kb.pKey.wasPressedThisFrame)&&!isStunned)//Cast Spell
+        if ((isPlayer1 ? kb.wKey.wasPressedThisFrame : kb.pKey.wasPressedThisFrame)&&!isStunned && !isDashing)//Cast Spell
         {
             switch (equippedSpell)
             {
@@ -171,7 +185,7 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(CastThunderbolt());
                     break;
                 case Spell.dash:
-                    Dash();
+                    StartCoroutine(CastDash());
                     break;
                 case Spell.ice:
                     IceSpell();
@@ -183,7 +197,10 @@ public class PlayerController : MonoBehaviour
             equippedSpell = Spell.unequipped;
         }
         #endregion
-
+        if (isDashing)
+        {
+            Debug.Log(speed);
+        }
         UpdateSpeedText();
         //SetSpeedIncreaseTextColor();
     }
@@ -204,12 +221,12 @@ public class PlayerController : MonoBehaviour
 
         while (elapsedTime < glideSpeedResetDuration)
         {
-            speed = Mathf.Lerp(startSpeed, baseSpeed, elapsedTime / glideSpeedResetDuration);
+            if (!isDashing) speed = Mathf.Lerp(startSpeed, baseSpeed, elapsedTime / glideSpeedResetDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        speed = baseSpeed;
+        if (!isDashing)  speed = baseSpeed;
     }
     #endregion
 
@@ -217,7 +234,10 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyGravity()
     {
-        rb.velocity += new Vector2(0, -gravity)*Time.deltaTime;
+        if (!isDashing)
+        {
+            rb.velocity += new Vector2(0, -gravity) * Time.deltaTime;
+        }
     }
 
     private IEnumerator JumpCooldown()
@@ -262,9 +282,20 @@ public class PlayerController : MonoBehaviour
         isStunned = false;
     }
 
-    private void Dash()
+    private IEnumerator CastDash()
     {
-
+        isDashing = true;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"));
+        speed += dashSpeedIncrease;
+        //Debug.Log(speed);
+        //StopCoroutine(ResetToBaseSpeed());
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"),false);
+        //Debug.Log(speed);
+        speed -= dashSpeedIncrease;
+        //StartCoroutine(ResetToBaseSpeed());
     }
 
     private void IceSpell()
@@ -423,7 +454,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Energy Orb"))
+        if (collision.gameObject.CompareTag("Energy Orb") &&!isDashing)
         {
             baseSpeed += normalOrbSpeedIncrease;
             UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
@@ -431,7 +462,7 @@ public class PlayerController : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        else if (collision.gameObject.CompareTag("Obstacle") && !isDashing)
         {
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
@@ -441,34 +472,38 @@ public class PlayerController : MonoBehaviour
             gameManager.EndGame((isPlayer1) ? 1 : 2);
         }
 
-        switch (collision.gameObject.name)
+        if (!isDashing)
         {
-            case "ThunderboltEnergyOrb":
-                equippedSpell = Spell.thunderbolt;
-                break;
-            case "DashEnergyOrb":
-                equippedSpell = Spell.dash;
-                break;
-            case "IceEnergyOrb":
-                equippedSpell = Spell.ice;
-                break;
-            case "ShieldEnergyOrb":
-                equippedSpell = Spell.shield;
-                break;
+            switch (collision.gameObject.name)
+            {
+                case "ThunderboltEnergyOrb":
+                    equippedSpell = Spell.thunderbolt;
+                    break;
+                case "DashEnergyOrb":
+                    equippedSpell = Spell.dash;
+                    break;
+                case "IceEnergyOrb":
+                    equippedSpell = Spell.ice;
+                    break;
+                case "ShieldEnergyOrb":
+                    equippedSpell = Spell.shield;
+                    break;
 
-            case "P1Thunderbolt":
-                if (!isPlayer1)
-                {
-                    StartCoroutine(GetHitThunderbolt());
-                }
-                break;
-            case "P2Thunderbolt":
-                if (isPlayer1)
-                {
-                    StartCoroutine(GetHitThunderbolt());
-                }
-                break;
+                case "P1Thunderbolt":
+                    if (!isPlayer1)
+                    {
+                        StartCoroutine(GetHitThunderbolt());
+                    }
+                    break;
+                case "P2Thunderbolt":
+                    if (isPlayer1)
+                    {
+                        StartCoroutine(GetHitThunderbolt());
+                    }
+                    break;
+            }
         }
+        
      }
     #endregion
 }
