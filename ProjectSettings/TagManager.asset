@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Tower
   - Finish Line
+  - Ice Projectile
   layers:
   - Default
   - TransparentFX

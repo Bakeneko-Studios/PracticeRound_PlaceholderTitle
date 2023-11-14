@@ -71,6 +71,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashSpeedIncrease;
     private bool isDashing;
+    public GameObject iceProjectile;
+    [SerializeField] private float iceSpellSpeedPenalty;
+    [SerializeField] private float iceProjectileSpeed;
+    [SerializeField] private int iceProjectileCount;
+    private int iceProjectilesLeft;
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
@@ -114,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
         isTouchingTower = false;
 
-        equippedSpell = Spell.unequipped;
+        equippedSpell = Spell.ice;
 
         isStunned = false;
         isDashing = false;
@@ -188,13 +193,13 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(CastDash());
                     break;
                 case Spell.ice:
-                    IceSpell();
+                    CastIceSpell();
                     break;
                 case Spell.shield:
                     Shield();
                     break;
             }
-            equippedSpell = Spell.unequipped;
+            
         }
         #endregion
         if (isDashing)
@@ -268,6 +273,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator CastThunderbolt()
     {
         thunderbolt.SetActive(true);
+        equippedSpell = Spell.unequipped;
         yield return new WaitForSeconds(thunderboltAppearDuration);
         thunderbolt.SetActive(false);
     }
@@ -284,6 +290,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator CastDash()
     {
+        equippedSpell = Spell.unequipped;
+
         isDashing = true;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"));
         speed += dashSpeedIncrease;
@@ -298,14 +306,20 @@ public class PlayerController : MonoBehaviour
         //StartCoroutine(ResetToBaseSpeed());
     }
 
-    private void IceSpell()
+    private void CastIceSpell()
     {
-
+        GameObject projectile = Instantiate(iceProjectile,transform.position+new Vector3(1.75f,0f,0f),Quaternion.identity);
+        projectile.GetComponent<IceProjectileController>().speed = iceProjectileSpeed;
+        iceProjectilesLeft -= 1;
+        if (iceProjectilesLeft <= 0)
+        {
+            equippedSpell = Spell.unequipped;
+        }
     }
 
     private void Shield()
     {
-
+        equippedSpell = Spell.unequipped;
     }
     #endregion
 
@@ -467,6 +481,13 @@ public class PlayerController : MonoBehaviour
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
         }
+        else if (collision.gameObject.CompareTag("Ice Projectile"))
+        {
+            baseSpeed -= iceSpellSpeedPenalty;
+            UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
+            speed = baseSpeed;
+            Destroy(collision.gameObject);
+        }
         else if (collision.gameObject.CompareTag("Finish Line"))
         {
             gameManager.EndGame((isPlayer1) ? 1 : 2);
@@ -484,6 +505,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case "IceEnergyOrb":
                     equippedSpell = Spell.ice;
+                    iceProjectilesLeft = iceProjectileCount;
                     break;
                 case "ShieldEnergyOrb":
                     equippedSpell = Spell.shield;
@@ -501,6 +523,14 @@ public class PlayerController : MonoBehaviour
                         StartCoroutine(GetHitThunderbolt());
                     }
                     break;
+                /*
+                case "IceProjectile":
+                    baseSpeed -= iceSpellSpeedPenalty;
+                    UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
+                    speed = baseSpeed;
+                    Destroy(collision.gameObject);
+                    break;
+                */
             }
         }
         
