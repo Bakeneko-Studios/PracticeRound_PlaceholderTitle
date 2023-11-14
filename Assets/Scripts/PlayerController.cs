@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float iceProjectileSpeed;
     [SerializeField] private int iceProjectileCount;
     private int iceProjectilesLeft;
+    [SerializeField] private float shieldDuration;
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
         isTouchingTower = false;
 
-        equippedSpell = Spell.ice;
+        equippedSpell = Spell.dash;
 
         isStunned = false;
         isDashing = false;
