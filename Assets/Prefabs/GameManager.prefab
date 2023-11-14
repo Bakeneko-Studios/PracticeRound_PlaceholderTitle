@@ -57,7 +57,7 @@ MonoBehaviour:
   maxZoom: 25
   initialScrollSpeed: 3
   scrollSpeedIncreaseRate: 0.05
-  mapLength: 4600
+  mapLength: 6000
   relativeSpeedMultiplier: 0.45
   initialCameraSize: 0
   backgroundScroller1: {fileID: 0}

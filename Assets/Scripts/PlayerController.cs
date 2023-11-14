@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speedIncreaseTextAppearDuration;
     private Animator speedIncreaseTextAnimator;
     private bool isSpeedIncreaseTextAppearing;
+    public TextMeshProUGUI spellText;
+    [SerializeField] private string thunderboltName;
+    [SerializeField] private string dashName;
+    [SerializeField] private string iceName;
+    [SerializeField] private string shieldName;
     /*
     [SerializeField] private float rainbowTextSpeed;
     private float rainbowTextUpperBound;
@@ -103,6 +108,8 @@ public class PlayerController : MonoBehaviour
 
         speedIncreaseTextAnimator = speedIncreaseText.GetComponent<Animator>();
         isSpeedIncreaseTextAppearing = false;
+
+        spellText.text = "Spell:\n";
 
         /*
         rainbowTextUpperBound = isPlayer1 ? 185f : 185f;
@@ -275,6 +282,7 @@ public class PlayerController : MonoBehaviour
     {
         thunderbolt.SetActive(true);
         equippedSpell = Spell.unequipped;
+        spellText.text = "Spell:\n";
         yield return new WaitForSeconds(thunderboltAppearDuration);
         thunderbolt.SetActive(false);
     }
@@ -292,6 +300,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator CastDash()
     {
         equippedSpell = Spell.unequipped;
+        spellText.text = "Spell:\n";
 
         isDashing = true;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"));
@@ -315,12 +324,14 @@ public class PlayerController : MonoBehaviour
         if (iceProjectilesLeft <= 0)
         {
             equippedSpell = Spell.unequipped;
+            spellText.text = "Spell:\n";
         }
     }
 
     private void Shield()
     {
         equippedSpell = Spell.unequipped;
+        spellText.text = "Spell:\n";
     }
     #endregion
 
@@ -496,42 +507,31 @@ public class PlayerController : MonoBehaviour
 
         if (!isDashing)
         {
-            switch (collision.gameObject.name)
+            string name = collision.gameObject.name;
+            if (name == "P1Thunderbolt" && !isPlayer1 || name=="P2Thunderbolt" && isPlayer1) 
             {
-                case "ThunderboltEnergyOrb":
-                    equippedSpell = Spell.thunderbolt;
-                    break;
-                case "DashEnergyOrb":
-                    equippedSpell = Spell.dash;
-                    break;
-                case "IceEnergyOrb":
-                    equippedSpell = Spell.ice;
-                    iceProjectilesLeft = iceProjectileCount;
-                    break;
-                case "ShieldEnergyOrb":
-                    equippedSpell = Spell.shield;
-                    break;
-
-                case "P1Thunderbolt":
-                    if (!isPlayer1)
-                    {
-                        StartCoroutine(GetHitThunderbolt());
-                    }
-                    break;
-                case "P2Thunderbolt":
-                    if (isPlayer1)
-                    {
-                        StartCoroutine(GetHitThunderbolt());
-                    }
-                    break;
-                /*
-                case "IceProjectile":
-                    baseSpeed -= iceSpellSpeedPenalty;
-                    UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
-                    speed = baseSpeed;
-                    Destroy(collision.gameObject);
-                    break;
-                */
+                StartCoroutine(GetHitThunderbolt());
+            }
+            else if (name.Contains("ThunderboltEnergyOrb"))
+            {
+                equippedSpell = Spell.thunderbolt;
+                spellText.text = "Spell:\n" + thunderboltName;
+            }
+            else if (name.Contains("DashEnergyOrb"))
+            {
+                equippedSpell = Spell.dash;
+                spellText.text = "Spell:\n" + dashName;
+            }
+            else if (name.Contains("IceEnergyOrb"))
+            {
+                equippedSpell = Spell.ice;
+                spellText.text = "Spell:\n" + iceName;
+                iceProjectilesLeft = iceProjectileCount;
+            }
+            else if (name.Contains("ShieldEnergyOrb"))
+            {
+                equippedSpell = Spell.shield;
+                spellText.text = "Spell:\n" + shieldName;
             }
         }
         
