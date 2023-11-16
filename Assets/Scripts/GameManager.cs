@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         progressIconXDistance = progressIconFinalX - progressIconInitialX;
 
         gameOver = false;
-        deathRange = -26;
+        deathRange = -30;
 
         obstacleIntensity = initialObstacleIntensity;
         actualObstacleIntensity = 1f / obstacleIntensity;
@@ -152,7 +152,8 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {      
+    {
+        
         checkMaxZoom();
 
         calculateSpeed();
@@ -363,13 +364,15 @@ public class GameManager : MonoBehaviour
     private void PlayerWinCondition()
     {
         if (!gameOver){
-            if (player1Controller.IsOutsideCameraView() < deathRange){
+            if (mainCamera.WorldToViewportPoint(player1.transform.position).x<0)
+            {
                 Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
                 EndGame(2);
                 //Time.timeScale = 0;
             }
-            if (player2Controller.IsOutsideCameraView() < deathRange){
-                Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
+            if (mainCamera.WorldToViewportPoint(player2.transform.position).x < 0)
+            {
+                Instantiate(deathBoom, new Vector3(-25, player2.transform.position.y, 0), Quaternion.identity);
                 EndGame(1);
                 //Time.timeScale = 0;
             }
@@ -378,6 +381,10 @@ public class GameManager : MonoBehaviour
 
     public void EndGame(int winner)
     {
+        Debug.Log("Player1: " + player1Controller.IsOutsideCameraView());
+        Debug.Log("Player2: " + player2Controller.IsOutsideCameraView());
+        Debug.Log("game over");
+        
         gameOverUI.SetActive(true);
         gameOverText.text = "Player " + winner + " Wins";
         gameOver = true;
