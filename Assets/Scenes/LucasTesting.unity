@@ -1399,6 +1399,26 @@ PrefabInstance:
       propertyPath: player2ProgressIcon
       value: 
       objectReference: {fileID: 1740284454}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: initialObstacleIntensity
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: maxSpawnObstacleInterval
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: minSpawnObstacleInterval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: obstacleIntensityIncreaseRate
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: obstacleIntensityIncreaseInterval
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1310862991986005495, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: m_Name
       value: GameManager
