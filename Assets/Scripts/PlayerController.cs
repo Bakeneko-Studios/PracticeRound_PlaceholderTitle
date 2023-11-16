@@ -81,7 +81,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float iceProjectileSpeed;
     [SerializeField] private int iceProjectileCount;
     private int iceProjectilesLeft;
-    [SerializeField] private float shieldDuration;
+    //public GameObject shield;
+    //[SerializeField] private float shieldDuration;
+
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;

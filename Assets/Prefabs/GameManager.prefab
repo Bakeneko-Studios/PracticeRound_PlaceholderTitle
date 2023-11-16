@@ -78,14 +78,15 @@ MonoBehaviour:
   minTowerY: -14.5
   towerSpawnXPos: 10
   initialObstacleIntensity: 1
-  obstacleIntensityIncreaseRate: 0.05
-  obstacleIntensityIncreaseInterval: 8
+  obstacleIntensityIncreaseRate: 0.15
+  obstacleIntensityIncreaseInterval: 7.5
   minSpawnObstacleInterval: 3.5
-  maxSpawnObstacleInterval: 11
+  maxSpawnObstacleInterval: 10
   batSwarm: {fileID: 6435773639376018767, guid: 9cbd9157d42922c4f94ee3b20bd06b52, type: 3}
+  batSwarmIndication: {fileID: 2792574094818901883, guid: 82eae4fb15e64974d9d1fb753978f178, type: 3}
   doubleBatBaseChance: 0.3
-  tripleBatBaseChance: 0.1
-  quadrupleBatBaseChance: 0.05
+  tripleBatBaseChance: 0.125
+  quadrupleBatBaseChance: 0.075
   maxBatSwarmY: 6
   minBatSwarmY: -6
   maxBatSwarmX: 40

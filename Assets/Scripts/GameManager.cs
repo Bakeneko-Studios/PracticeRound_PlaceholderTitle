@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minSpawnObstacleInterval;
     [SerializeField] private float maxSpawnObstacleInterval;
     public GameObject batSwarm;
+    //public GameObject batSwarmIndication;
     [SerializeField] private float doubleBatBaseChance;
     [SerializeField] private float tripleBatBaseChance;
     [SerializeField] private float quadrupleBatBaseChance;
@@ -351,7 +352,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < numberOfBats; i++)
         {
             Instantiate(batSwarm, new Vector3(
-                mainCamera.transform.position.x + 2f * mainCamera.orthographicSize * mainCamera.aspect + Random.Range(minBatSwarmX, maxBatSwarmX),
+                mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + Random.Range(minBatSwarmX, maxBatSwarmX),
                 Random.Range(minBatSwarmY, maxBatSwarmY), 0f),
                 Quaternion.identity);
         }

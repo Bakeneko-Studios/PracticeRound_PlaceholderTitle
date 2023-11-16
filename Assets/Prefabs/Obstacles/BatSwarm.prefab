@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1912059945921836256}
   - component: {fileID: 374927377}
   - component: {fileID: 374927376}
+  - component: {fileID: 8717669855143188800}
   m_Layer: 0
   m_Name: BatSwarm
   m_TagString: Obstacle
@@ -146,3 +147,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8717669855143188800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6435773639376018767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455b975c5e67471469b34e4e1970ec49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batSwarmIndication: {fileID: 2792574094818901883, guid: 82eae4fb15e64974d9d1fb753978f178, type: 3}
