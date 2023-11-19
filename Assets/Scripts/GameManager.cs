@@ -9,6 +9,11 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     #region Variable Declaration
+    [Header("Win Conditions")]
+    [SerializeField] private float outOfBoundsMaxSurviveTime;
+    private float p1OutOfBoundsSurviveTime;
+    private float p2OutOfBoundsSurviveTime;
+
     [Header("Misc GameObjects")]
     public GameObject player1;
     public GameObject player2;
@@ -139,8 +144,11 @@ public class GameManager : MonoBehaviour
         kb = Keyboard.current;
 
         isPaused = false;
-        #endregion
-    }
+
+        p1OutOfBoundsSurviveTime = 0f;
+        p2OutOfBoundsSurviveTime=0f;
+    #endregion
+}
 
     // Start is called before the first frame update
     void Start()
@@ -366,15 +374,32 @@ public class GameManager : MonoBehaviour
         if (!gameOver){
             if (mainCamera.WorldToViewportPoint(player1.transform.position).x<0)
             {
-                Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
-                EndGame(2);
+                p1OutOfBoundsSurviveTime += Time.deltaTime;
+                if (p1OutOfBoundsSurviveTime >= outOfBoundsMaxSurviveTime)
+                {
+                    Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
+                    EndGame(2);
+                }
                 //Time.timeScale = 0;
             }
+            else
+            {
+                p1OutOfBoundsSurviveTime = 0f;
+            }
+
             if (mainCamera.WorldToViewportPoint(player2.transform.position).x < 0)
             {
-                Instantiate(deathBoom, new Vector3(-25, player2.transform.position.y, 0), Quaternion.identity);
-                EndGame(1);
+                p2OutOfBoundsSurviveTime += Time.deltaTime;
+                if (p2OutOfBoundsSurviveTime >= outOfBoundsMaxSurviveTime)
+                {
+                    Instantiate(deathBoom, new Vector3(-25, player2.transform.position.y, 0), Quaternion.identity);
+                    EndGame(1);
+                }
                 //Time.timeScale = 0;
+            }
+            else
+            {
+                p2OutOfBoundsSurviveTime = 0f;
             }
         }
     }

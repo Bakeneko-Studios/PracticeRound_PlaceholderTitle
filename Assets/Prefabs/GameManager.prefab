@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244e572b39ee4594c8c1cd2639b692fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outOfBoundsMaxSurviveTime: 5
   player1: {fileID: 0}
   player2: {fileID: 0}
   finishLine: {fileID: 0}
@@ -77,13 +78,12 @@ MonoBehaviour:
   maxTowerY: -8.5
   minTowerY: -14.5
   towerSpawnXPos: 10
-  initialObstacleIntensity: 1
-  obstacleIntensityIncreaseRate: 0.15
-  obstacleIntensityIncreaseInterval: 7.5
-  minSpawnObstacleInterval: 3.5
-  maxSpawnObstacleInterval: 10
+  initialObstacleIntensity: 1.35
+  obstacleIntensityIncreaseRate: 0.25
+  obstacleIntensityIncreaseInterval: 6
+  minSpawnObstacleInterval: 2
+  maxSpawnObstacleInterval: 7.5
   batSwarm: {fileID: 6435773639376018767, guid: 9cbd9157d42922c4f94ee3b20bd06b52, type: 3}
-  batSwarmIndication: {fileID: 2792574094818901883, guid: 82eae4fb15e64974d9d1fb753978f178, type: 3}
   doubleBatBaseChance: 0.3
   tripleBatBaseChance: 0.125
   quadrupleBatBaseChance: 0.075

@@ -1412,6 +1412,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
+      propertyPath: outOfBoundsMaxSurviveTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: obstacleIntensityIncreaseRate
       value: 0.25
       objectReference: {fileID: 0}
@@ -1623,62 +1627,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 380688679, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 380688679, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 510
-      objectReference: {fileID: 0}
-    - target: {fileID: 380688679, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 380688680, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_text
-      value: 'Spell:
-
-        Hailstorm'
-      objectReference: {fileID: 0}
-    - target: {fileID: 380688680, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 9b1ee3d944a397e458d1c0b67ffb220b, type: 2}
-    - target: {fileID: 380688680, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -8767652832686184650, guid: 9b1ee3d944a397e458d1c0b67ffb220b, type: 2}
-    - target: {fileID: 380688680, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1397118727, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 1397118727, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 510
-      objectReference: {fileID: 0}
-    - target: {fileID: 1397118728, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_text
-      value: 'Spell:
-
-        Thunderbolt'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1397118728, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 9b1ee3d944a397e458d1c0b67ffb220b, type: 2}
-    - target: {fileID: 1397118728, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -8767652832686184650, guid: 9b1ee3d944a397e458d1c0b67ffb220b, type: 2}
-    - target: {fileID: 1397118728, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1974544906, guid: c4fb9bfbce1f94944baed10aefd29094, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
