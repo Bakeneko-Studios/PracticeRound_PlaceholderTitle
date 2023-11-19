@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244e572b39ee4594c8c1cd2639b692fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outOfBoundsMaxSurviveTime: 5
+  outOfBoundsMaxSurviveTime: 3.5
   player1: {fileID: 0}
   player2: {fileID: 0}
   finishLine: {fileID: 0}
