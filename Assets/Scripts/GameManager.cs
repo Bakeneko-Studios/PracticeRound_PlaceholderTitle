@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minTowerY;
     [SerializeField] private float towerSpawnXPos; //Distance between tower's x pos and the camera's right boundary
 
-    [Header("Other Obstacles")]
+    [Header("Obstacles")]
     [SerializeField] private float initialObstacleIntensity;
     [SerializeField] private float obstacleIntensityIncreaseRate; //amount the obstacle intensity increases by
     [SerializeField] private float obstacleIntensityIncreaseInterval; //interval (seconds) at which obstacle internsity increases
@@ -83,6 +83,8 @@ public class GameManager : MonoBehaviour
     private float actualObstacleIntensity; // equals 1 / obstacleIntensity
     [SerializeField] private float minSpawnObstacleInterval;
     [SerializeField] private float maxSpawnObstacleInterval;
+
+    [Header("BatSwarm")]
     public GameObject batSwarm;
     //public GameObject batSwarmIndication;
     [SerializeField] private float doubleBatBaseChance;
@@ -92,6 +94,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float minBatSwarmY;
     [SerializeField] private float maxBatSwarmX;
     [SerializeField] private float minBatSwarmX;
+
+    [Header("Cauldron")]
+    public GameObject cauldron;
+    [SerializeField] private float minCauldronY;
+    [SerializeField] private float maxCauldronY;
 
     private bool isPaused;
     #endregion
@@ -327,11 +334,15 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minSpawnObstacleInterval, maxSpawnObstacleInterval) * actualObstacleIntensity);
 
-            int obstacleToSpawn = Random.Range(0, 1);
+            int obstacleToSpawn = Random.Range(0, 2);
             
             if (obstacleToSpawn == 0) 
             {
                 SpawnBat();
+            }
+            else if (obstacleToSpawn == 1)
+            {
+                SpawnCauldron();
             }
         }
     }
@@ -365,6 +376,12 @@ public class GameManager : MonoBehaviour
                 Random.Range(minBatSwarmY, maxBatSwarmY), 0f),
                 Quaternion.identity);
         }
+    }
+
+    private void SpawnCauldron()
+    {
+        Instantiate(cauldron, new Vector3(mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + 15f,
+            Random.Range(minCauldronY, maxCauldronY), 0f), Quaternion.identity);
     }
     #endregion
 

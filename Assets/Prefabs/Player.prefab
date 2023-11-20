@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8798436322676475521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.49900055, y: -0.3695197, z: 0}
-  m_LocalScale: {x: 1.9, y: 1.6, z: 1.9}
+  m_LocalScale: {x: 1.9375, y: 1.625, z: 1.9375}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -140,7 +140,6 @@ MonoBehaviour:
   iceSpellSpeedPenalty: 3
   iceProjectileSpeed: 10
   iceProjectileCount: 3
-  shieldDuration: 0
   touchGroundSpeedPenalty: 5
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602

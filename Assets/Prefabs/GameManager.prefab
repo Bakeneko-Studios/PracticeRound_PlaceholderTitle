@@ -91,3 +91,6 @@ MonoBehaviour:
   minBatSwarmY: -6
   maxBatSwarmX: 40
   minBatSwarmX: 22
+  cauldron: {fileID: 6961753699546115543, guid: e3fd8177a5003944eb50803dd3e8868e, type: 3}
+  minCauldronY: -6
+  maxCauldronY: 6
