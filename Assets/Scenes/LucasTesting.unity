@@ -1396,10 +1396,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 189777326}
     - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
-      propertyPath: doubleBatBaseChance
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: pauseIndicationText
       value: 
       objectReference: {fileID: 1111236122}
@@ -1411,14 +1407,6 @@ PrefabInstance:
       propertyPath: player2ProgressIcon
       value: 
       objectReference: {fileID: 1740284454}
-    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
-      propertyPath: tripleBatBaseChance
-      value: 0.275
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310862991986005493, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
-      propertyPath: quadrupleBatBaseChance
-      value: 0.175
-      objectReference: {fileID: 0}
     - target: {fileID: 1310862991986005495, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: m_Name
       value: GameManager

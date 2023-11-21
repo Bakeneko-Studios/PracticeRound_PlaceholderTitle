@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 374927377}
   - component: {fileID: 374927376}
   - component: {fileID: 8717669855143188800}
+  - component: {fileID: -1757581951204161576}
   m_Layer: 0
   m_Name: BatSwarm
   m_TagString: Obstacle
@@ -160,3 +161,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batSwarmIndication: {fileID: 2792574094818901883, guid: 82eae4fb15e64974d9d1fb753978f178, type: 3}
+--- !u!114 &-1757581951204161576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6435773639376018767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38319a984ddf4f14f8cd03743ce3d4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 0
+  maxSpeed: 5

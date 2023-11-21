@@ -84,9 +84,9 @@ MonoBehaviour:
   minSpawnObstacleInterval: 2
   maxSpawnObstacleInterval: 7.5
   batSwarm: {fileID: 6435773639376018767, guid: 9cbd9157d42922c4f94ee3b20bd06b52, type: 3}
-  doubleBatBaseChance: 0.3
-  tripleBatBaseChance: 0.125
-  quadrupleBatBaseChance: 0.075
+  doubleBatBaseChance: 0.4
+  tripleBatBaseChance: 0.275
+  quadrupleBatBaseChance: 0.175
   maxBatSwarmY: 6
   minBatSwarmY: -6
   maxBatSwarmX: 40
