@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
     [SerializeField] private float touchBatSwarmSpeedPenalty;
     private bool isTouchingTower;
+    [SerializeField] private float cauldronSpeedIncrease;
 
     [Header("Zoom")]
     [SerializeField] private float rightBoundaryWidth;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Misc")]
     [SerializeField] private float touchGroundSpeedPenalty;
+    
     private bool isStunned;
     #endregion
 
@@ -387,6 +389,25 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("stopped");
     }
 
+    private void UpdateSpellText()
+    {
+        switch (equippedSpell)
+        {
+            case Spell.thunderbolt:
+                spellText.text = "Spell:\n" + thunderboltName;
+                break;
+            case Spell.dash:
+                spellText.text = "Spell:\n" + dashName;
+                break;
+            case Spell.shield:
+                spellText.text = "Spell:\n" + shieldName;
+                break;
+            case Spell.ice:
+                spellText.text = "Spell:\n" + iceName;
+                break;
+        }
+    }
+
     /*
     private void SetSpeedIncreaseTextColor()
     {
@@ -486,7 +507,6 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed += normalOrbSpeedIncrease;
             UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
-            
 
             Destroy(collision.gameObject);
         }
@@ -495,12 +515,25 @@ public class PlayerController : MonoBehaviour
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
         }
-        else if (collision.gameObject.CompareTag("Ice Projectile"))
+        else if (collision.gameObject.CompareTag("Ice Projectile") && !isDashing)
         {
             baseSpeed -= iceSpellSpeedPenalty;
             UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
             speed = baseSpeed;
             Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Cauldron"))
+        {
+            if (collision.gameObject.GetComponent<Cauldron>().isSpilled)
+            {
+                int index = Random.Range(0, System.Enum.GetValues(typeof(Spell)).Length);
+                equippedSpell = (Spell)index;
+                UpdateSpellText();
+
+                baseSpeed += cauldronSpeedIncrease;
+                UpdateSpeedIncreaseText("+" + cauldronSpeedIncrease);
+            }
+
         }
         else if (collision.gameObject.CompareTag("Finish Line"))
         {
@@ -517,24 +550,25 @@ public class PlayerController : MonoBehaviour
             else if (name.Contains("ThunderboltEnergyOrb"))
             {
                 equippedSpell = Spell.thunderbolt;
-                spellText.text = "Spell:\n" + thunderboltName;
+                //spellText.text = "Spell:\n" + thunderboltName;
             }
             else if (name.Contains("DashEnergyOrb"))
             {
                 equippedSpell = Spell.dash;
-                spellText.text = "Spell:\n" + dashName;
+                //spellText.text = "Spell:\n" + dashName;
             }
             else if (name.Contains("IceEnergyOrb"))
             {
                 equippedSpell = Spell.ice;
-                spellText.text = "Spell:\n" + iceName;
+                //spellText.text = "Spell:\n" + iceName;
                 iceProjectilesLeft = iceProjectileCount;
             }
             else if (name.Contains("ShieldEnergyOrb"))
             {
                 equippedSpell = Spell.shield;
-                spellText.text = "Spell:\n" + shieldName;
+                //spellText.text = "Spell:\n" + shieldName;
             }
+            UpdateSpellText();
         }
         
      }

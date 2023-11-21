@@ -380,8 +380,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCauldron()
     {
-        Instantiate(cauldron, new Vector3(mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + 15f,
+        GameObject spawnedCauldron=Instantiate(cauldron, new Vector3(mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + 15f,
             Random.Range(minCauldronY, maxCauldronY), 0f), Quaternion.identity);
+
+        //spawnedCauldron.GetComponent<Cauldron>().spillWaitTime *= (mainCamera.orthographicSize / initialCameraSize);
     }
     #endregion
 
