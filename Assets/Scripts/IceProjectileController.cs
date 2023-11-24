@@ -6,12 +6,14 @@ public class IceProjectileController : MonoBehaviour
 {
     // Start is called before the first frame update
     [HideInInspector] public float speed;
+    [HideInInspector] public float angle;
 
     private Rigidbody2D rb;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        angle *= Mathf.Deg2Rad;
+        rb.velocity = speed*new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         StartCoroutine(SelfDestruct());
     }

@@ -133,13 +133,13 @@ MonoBehaviour:
   - {fileID: 151697213410889829, guid: 68206e8687ffa964f9dc8ba25dc0170c, type: 3}
   thunderbolt: {fileID: 5515962316236393386, guid: cf5ced2d89841624d996daf7558efb2d, type: 3}
   thunderboltAppearDuration: 0.1
-  thunderboltSpeedPenalty: 5
+  thunderboltSpeedPenalty: 8
   thunderboltStunDuration: 1.5
   dashDuration: 0.65
   dashSpeedIncrease: 13
   iceProjectile: {fileID: 6857567632506939881, guid: 09ab368e86ef147498e19bff58f08705, type: 3}
-  iceSpellSpeedPenalty: 3
-  iceProjectileSpeed: 10
+  iceSpellSpeedPenalty: 4
+  iceProjectileSpeed: 15
   iceProjectileCount: 3
   touchGroundSpeedPenalty: 5
   gameManager: {fileID: 0}

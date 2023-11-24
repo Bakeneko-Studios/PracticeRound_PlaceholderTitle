@@ -9,6 +9,12 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     #region Variable Declaration
+    [Header("Audio")]
+    public AudioSource music;
+    private AudioLowPassFilter lowPassFilter;
+    private float unmuffledFrequency;
+    [SerializeField] private float muffledFrequency;
+
     [Header("Win Conditions")]
     [SerializeField] private float outOfBoundsMaxSurviveTime;
     private float p1OutOfBoundsSurviveTime;
@@ -116,6 +122,9 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         #region Initialize Variables
+        lowPassFilter = GetComponent<AudioLowPassFilter>();
+        unmuffledFrequency = lowPassFilter.cutoffFrequency;
+
         mainCamera = Camera.main;
         initialCameraSize = mainCamera.orthographicSize;
         isMaxZoom = false;
@@ -193,6 +202,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isPaused)
         {
+            lowPassFilter.cutoffFrequency = muffledFrequency;
             pauseIndicationText.SetActive(false);
             //TODO: Show pause menu
             Time.timeScale = 0;
@@ -218,6 +228,7 @@ public class GameManager : MonoBehaviour
         pauseIndicationText.SetActive(true);
         Time.timeScale = 1;
         isPaused = false;
+        lowPassFilter.cutoffFrequency = unmuffledFrequency;
     }
     #endregion
 

@@ -131,7 +131,8 @@ public class PlayerController : MonoBehaviour
 
         isTouchingTower = false;
 
-        equippedSpell = Spell.dash;
+        equippedSpell = Spell.unequipped;
+        //iceProjectilesLeft = iceProjectileCount;
 
         isStunned = false;
         isDashing = false;
@@ -322,14 +323,38 @@ public class PlayerController : MonoBehaviour
 
     private void CastIceSpell()
     {
-        GameObject projectile = Instantiate(iceProjectile,transform.position+new Vector3(1.75f,0f,0f),Quaternion.identity);
-        projectile.GetComponent<IceProjectileController>().speed = iceProjectileSpeed;
+        //iceProjectilesLeft = iceProjectileCount;
+        if (iceProjectilesLeft == 3)
+        {
+            SpawnIceProjectile(0);
+        }
+        else if (iceProjectilesLeft == 2)
+        {
+            SpawnIceProjectile(15);
+            SpawnIceProjectile(-15);
+        }
+        else if (iceProjectilesLeft == 1)
+        {
+            SpawnIceProjectile(15);
+            SpawnIceProjectile(5);
+            SpawnIceProjectile(-5);
+            SpawnIceProjectile(-15);
+        }
         iceProjectilesLeft -= 1;
+        Debug.Log(iceProjectilesLeft);
         if (iceProjectilesLeft <= 0)
         {
             equippedSpell = Spell.unequipped;
             spellText.text = "Spell:\n";
         }
+    }
+
+    private void SpawnIceProjectile(float angle)
+    {
+        GameObject projectile = Instantiate(iceProjectile, transform.position + new Vector3(1.75f, 0f, 0f), Quaternion.identity);
+        IceProjectileController controller = projectile.GetComponent<IceProjectileController>();
+        controller.speed = iceProjectileSpeed;
+        controller.angle = angle;
     }
 
     private void Shield()
@@ -528,6 +553,7 @@ public class PlayerController : MonoBehaviour
             {
                 int index = Random.Range(0, System.Enum.GetValues(typeof(Spell)).Length);
                 equippedSpell = (Spell)index;
+                iceProjectilesLeft = iceProjectileCount;
                 UpdateSpellText();
 
                 baseSpeed += cauldronSpeedIncrease;
