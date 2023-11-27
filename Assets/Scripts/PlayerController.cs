@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class PlayerController : MonoBehaviour
     private string currentColor;
     private float colorDirection;
     */
+
+    [Header("SFX")]
+    public GameObject SFXManager;
+    private AudioSource getEnergyOrbSFX;
+    private AudioSource dashSFX;
 
     [Header("Obstacles")]
     [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
@@ -104,6 +110,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         #region Initialize Variables
+        AudioSource[] audioSources = SFXManager.GetComponents<AudioSource>();
+        foreach (AudioSource source in audioSources)
+        {
+            switch (source.clip.name)
+            {
+                case "GetEnergyOrb":
+                    getEnergyOrbSFX = source;
+                    break;
+                case "Dash":
+                    dashSFX = source;
+                    break;
+            }
+        }
+
         isGrounded = false;
 
         baseSpeed = initialSpeed;
@@ -306,6 +326,8 @@ public class PlayerController : MonoBehaviour
     {
         equippedSpell = Spell.unequipped;
         spellText.text = "Spell:\n";
+
+        dashSFX.PlayOneShot(dashSFX.clip);
 
         isDashing = true;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"));
@@ -530,6 +552,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Energy Orb") &&!isDashing)
         {
+            getEnergyOrbSFX.PlayOneShot(getEnergyOrbSFX.clip);
+            
             baseSpeed += normalOrbSpeedIncrease;
             UpdateSpeedIncreaseText("+" + normalOrbSpeedIncrease);
 
