@@ -1543,14 +1543,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1448405359, guid: e82fae35dccb59e40991565f79a3d7c6, type: 3}
-      propertyPath: m_Pitch
-      value: 0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448405359, guid: e82fae35dccb59e40991565f79a3d7c6, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9ccb6a956ea86b540862eaf1adc9c3c4, type: 3}
     - target: {fileID: 2787058042068046080, guid: e82fae35dccb59e40991565f79a3d7c6, type: 3}
       propertyPath: m_Name
       value: SFXManager
