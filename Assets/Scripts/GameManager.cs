@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     #region Variable Declaration
+    public string gameState;
+    
     [Header("Audio")]
     public AudioSource music;
     private AudioLowPassFilter lowPassFilter;
@@ -46,11 +48,16 @@ public class GameManager : MonoBehaviour
     private float player2Progress;
 
     [Header("Player Horizontal Speeds")]
+    [SerializeField] private float slowSpeed;
+    [SerializeField] private float moderateSpeed;
+    [SerializeField] private float fastSpeed;
+    [SerializeField] private float extremeSpeed;
+
     [SerializeField] private float relativeSpeedMultiplier; //player horizontal speed = relative speed * multiplier
 
     [HideInInspector] public float initialCameraSize;
-    private PlayerController player1Controller;
-    private PlayerController player2Controller;
+    [HideInInspector] public PlayerController player1Controller;
+    [HideInInspector] public PlayerController player2Controller;
     [HideInInspector] public BackgroundScroller backgroundScroller1;
     private BackgroundScroller backgroundScroller2;
     private BackgroundScroller backgroundScroller3;
@@ -122,6 +129,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         #region Initialize Variables
+        gameState = "MainMenu";
+
         lowPassFilter = GetComponent<AudioLowPassFilter>();
         unmuffledFrequency = lowPassFilter.cutoffFrequency;
 
@@ -137,12 +146,6 @@ public class GameManager : MonoBehaviour
         backgroundScroller3 = background3.GetComponent<BackgroundScroller>();
         backgroundScroller4 = background4.GetComponent<BackgroundScroller>();
         backgroundScroller5 = background5.GetComponent<BackgroundScroller>();
-
-        backgroundScroller1.scrollSpeed = initialScrollSpeed; 
-        backgroundScroller2.scrollSpeed = initialScrollSpeed;
-        backgroundScroller3.scrollSpeed = initialScrollSpeed;
-        backgroundScroller4.scrollSpeed = initialScrollSpeed;
-        backgroundScroller5.scrollSpeed = initialScrollSpeed;
 
         player1Progress = 0f;
         player2Progress = 0f;
@@ -163,39 +166,65 @@ public class GameManager : MonoBehaviour
 
         p1OutOfBoundsSurviveTime = 0f;
         p2OutOfBoundsSurviveTime=0f;
-    #endregion
-}
+        #endregion
+
+        player1.SetActive(false);
+        player2.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnTowers());
-        StartCoroutine(IncreaseObstacleIntensity());
-        StartCoroutine(SpawnObstacles());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        checkMaxZoom();
-
-        calculateSpeed();
-        AdjustBackgroundScrollSpeed();
-        AdjustPlayerSpeed();
-
-        UpdatePlayerProgress();
-
-        AdjustCameraSize();
-
-        PlayerWinCondition();
-
-        if (kb.escapeKey.wasPressedThisFrame)
+        if (gameState == "Gameplay")
         {
-            Pause();
+            checkMaxZoom();
+
+            calculateSpeed();
+            AdjustBackgroundScrollSpeed();
+            AdjustPlayerSpeed();
+
+            UpdatePlayerProgress();
+
+            AdjustCameraSize();
+
+            PlayerWinCondition();
+
+            if (kb.escapeKey.wasPressedThisFrame)
+            {
+                Pause();
+            }
         }
+        
         //Debug.Log(gameOver);
     }
+
+    #region GameState Functions
+    public void enterGameplay()
+    {
+        player1.SetActive(true);
+        player2.SetActive(true);
+        gameState = "Gameplay";
+
+        StartCoroutine(SpawnTowers());
+        StartCoroutine(IncreaseObstacleIntensity());
+        StartCoroutine(SpawnObstacles());
+
+        
+
+        backgroundScroller1.scrollSpeed = initialScrollSpeed;
+        backgroundScroller2.scrollSpeed = initialScrollSpeed;
+        backgroundScroller3.scrollSpeed = initialScrollSpeed;
+        backgroundScroller4.scrollSpeed = initialScrollSpeed;
+        backgroundScroller5.scrollSpeed = initialScrollSpeed;
+    }
+    #endregion
 
     #region Pause Functions
     private void Pause()
@@ -281,6 +310,31 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Speed Functions
+
+    public void setSlowSpeed()
+    {
+        player1Controller.initialSpeed = slowSpeed;
+        player2Controller.initialSpeed = slowSpeed;
+    }
+
+    public void setModerateSpeed()
+    {
+        player1Controller.initialSpeed = moderateSpeed;
+        player2Controller.initialSpeed = moderateSpeed;
+    }
+
+    public void setFastSpeed()
+    {
+        player1Controller.initialSpeed = fastSpeed;
+        player2Controller.initialSpeed = fastSpeed;
+    }
+
+    public void setExtremeSpeed()
+    {
+        player1Controller.initialSpeed = extremeSpeed;
+        player2Controller.initialSpeed = extremeSpeed;
+    }
+
     private void calculateSpeed()
     {
         relativeSpeed = Mathf.Abs(player1Controller.speed - player2Controller.speed);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundScroller : MonoBehaviour
 {
-    
+
     [HideInInspector] public float scrollSpeed;
     private float offset;
     private Material mat;

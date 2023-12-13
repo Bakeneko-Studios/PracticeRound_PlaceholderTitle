@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1310862991986005493}
   - component: {fileID: 1310862992971862608}
   - component: {fileID: 1310862992971862610}
+  - component: {fileID: 5984797101666433985}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244e572b39ee4594c8c1cd2639b692fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: 
   music: {fileID: 1310862992971862608}
   muffledFrequency: 1000
   outOfBoundsMaxSurviveTime: 3.5
@@ -63,8 +65,14 @@ MonoBehaviour:
   initialScrollSpeed: 3
   scrollSpeedIncreaseRate: 0.09
   mapLength: 6000
+  slowSpeed: 55
+  moderateSpeed: 65
+  fastSpeed: 80
+  extremeSpeed: 95
   relativeSpeedMultiplier: 0.45
   initialCameraSize: 0
+  player1Controller: {fileID: 0}
+  player2Controller: {fileID: 0}
   backgroundScroller1: {fileID: 0}
   gameOverUI: {fileID: 0}
   gameOverText: {fileID: 0}
@@ -113,7 +121,7 @@ AudioSource:
   m_Volume: 0.95
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -219,3 +227,18 @@ AudioLowPassFilter:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5984797101666433985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310862991986005495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429f2ee9bbfe64b4398efd80eded79cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingMenu: {fileID: 0}
+  selectModeMenu: {fileID: 0}
+  gameplayMenu: {fileID: 0}

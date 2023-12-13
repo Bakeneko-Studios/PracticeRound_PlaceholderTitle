@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
     #region Component Declaration
     private Rigidbody2D rb;
     private Collider2D collider;
+    private SpriteRenderer sr;
     Keyboard kb;
 
     public GameManager gameManager;
@@ -110,6 +111,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         #region Initialize Variables
+
+
         AudioSource[] audioSources = SFXManager.GetComponents<AudioSource>();
         foreach (AudioSource source in audioSources)
         {
@@ -161,6 +164,8 @@ public class PlayerController : MonoBehaviour
         #region Assign Components
         rb = gameObject.GetComponent<Rigidbody2D>();
         collider = gameObject.GetComponent<Collider2D>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        
         kb = Keyboard.current;
         #endregion
     }
@@ -168,9 +173,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ApplyGravity();
+        if (gameManager.gameState == "Gameplay")
+        {
+            ApplyGravity();
 
-        #region Glide
+            #region Glide
         if (!isDashing)
         {
             if (rb.velocity.y < 0f && !isGrounded)
@@ -197,7 +204,7 @@ public class PlayerController : MonoBehaviour
         
         #endregion
 
-        #region Player Actions
+            #region Player Actions
         if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown && !isStunned &&!isDashing) //Jump
         {
             isGrounded = false;
@@ -235,18 +242,20 @@ public class PlayerController : MonoBehaviour
             
         }
         #endregion
-        if (isDashing)
+            if (isDashing)
         {
             Debug.Log(speed);
         }
-        UpdateSpeedText();
-        //SetSpeedIncreaseTextColor();
+            UpdateSpeedText();
+            //SetSpeedIncreaseTextColor();
+        }
     }
 
     public void SetHorizontalSpeed(float speed)
     {
-        if (!isTouchingTower)
+        if (!isTouchingTower && rb!=null)
         {
+            
             rb.velocity = new Vector2(speed, rb.velocity.y);
         }
     }
@@ -335,7 +344,9 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(speed);
         //StopCoroutine(ResetToBaseSpeed());
         rb.velocity = new Vector2(rb.velocity.x, 0f);
+        sr.color -= new Color(0, 0, 0, 0.5f);
         yield return new WaitForSeconds(dashDuration);
+        sr.color += new Color(0, 0, 0, 0.5f);
         isDashing = false;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"),false);
         //Debug.Log(speed);
