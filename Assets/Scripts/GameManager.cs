@@ -170,6 +170,8 @@ public class GameManager : MonoBehaviour
 
         player1.SetActive(false);
         player2.SetActive(false);
+        
+
     }
 
     // Start is called before the first frame update

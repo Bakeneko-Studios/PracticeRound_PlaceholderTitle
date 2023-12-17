@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
     Keyboard kb;
 
     public GameManager gameManager;
+
+    private Animator anim;
     #endregion
 
     // Start is called before the first frame update
@@ -165,6 +167,11 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         collider = gameObject.GetComponent<Collider2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        if (isPlayer1)
+        {
+            anim = gameObject.transform.GetChild(2).gameObject.GetComponent<Animator>();
+        }
+        
         
         kb = Keyboard.current;
         #endregion
@@ -182,6 +189,11 @@ public class PlayerController : MonoBehaviour
         {
             if (rb.velocity.y < 0f && !isGrounded)
             {
+                    if (isPlayer1 && rb.velocity.y < -1f)
+                {
+                    anim.SetBool("isGlide",true);
+                    Debug.Log("entered " + rb.velocity.y);
+                }
                 StopCoroutine(ResetToBaseSpeed());
                 speed += glideSpeedIncreaseRate * Time.deltaTime; //accelerate when gliding
                 if (gravity > minGravity)
@@ -194,20 +206,34 @@ public class PlayerController : MonoBehaviour
             else
             {
                 StartCoroutine(ResetToBaseSpeed()); //reset to base speed when no longer gliding
+                if (isPlayer1)
+                {
+                   anim.SetBool("isGlide",false);
+                        //Debug.Log("e trigger");
+                }
+
                 gravity = baseGravity;
             }
         }
         else
         {
             StopCoroutine(ResetToBaseSpeed());
-        }
+                if (isPlayer1)
+                {
+                    anim.SetBool("isGlide", false);
+                }
+            }
         
         #endregion
 
             #region Player Actions
         if ((isPlayer1? kb.qKey.wasPressedThisFrame : kb.oKey.wasPressedThisFrame)&&!isJumpCooldown && !isStunned &&!isDashing) //Jump
         {
-            isGrounded = false;
+                if (isPlayer1)
+                {
+                    anim.SetBool("isGlide", false);
+                }
+                isGrounded = false;
 
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(transform.up*jumpForce*(isTouchingTower?touchingTowerJumpBoost:1f), ForceMode2D.Impulse);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c6173bd7df2d0f49ab7ba5812fae7f1
+guid: 42f626e08b97f9e478f861fb4c29854f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,13 +42,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
-  spriteBorder: {x: 46, y: 70, z: 69, w: 17}
+  spritePixelsToUnits: 224
+  spriteBorder: {x: 0, y: 292, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -139,7 +139,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Player1_Fly_0
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 732
+        width: 1029
+        height: 775
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84828f782d7bb4b4796f8df6a95b2333
+      internalID: 1571109755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player1_Fly_2
+      rect:
+        serializedVersion: 2
+        x: 1644
+        y: 732
+        width: 1031
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f140fce8ccfe9644a2ad3a34afb76e6
+      internalID: -1131060312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player1_Fly_3
+      rect:
+        serializedVersion: 2
+        x: 3245
+        y: 732
+        width: 1031
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21639603faa948b4bbbdc0cf8e32ac59
+      internalID: -1541949798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -150,7 +213,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Player1_Fly_0: 1571109755
+      Player1_Fly_1: -304501603
+      Player1_Fly_2: -1131060312
+      Player1_Fly_3: -1541949798
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
