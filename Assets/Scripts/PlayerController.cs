@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
     public GameManager gameManager;
 
     private Animator anim;
+    private PlayerDashColorChanger dashColorChanger;
     #endregion
 
     // Start is called before the first frame update
@@ -170,9 +171,11 @@ public class PlayerController : MonoBehaviour
         if (isPlayer1)
         {
             anim = gameObject.transform.GetChild(2).gameObject.GetComponent<Animator>();
+            
         }
-        
-        
+        dashColorChanger = gameObject.transform.GetChild(2).gameObject.GetComponent<PlayerDashColorChanger>();
+
+
         kb = Keyboard.current;
         #endregion
     }
@@ -365,6 +368,7 @@ public class PlayerController : MonoBehaviour
         dashSFX.PlayOneShot(dashSFX.clip);
 
         isDashing = true;
+        dashColorChanger.isDashing = true;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"));
         speed += dashSpeedIncrease;
         //Debug.Log(speed);
@@ -374,6 +378,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
         sr.color += new Color(0, 0, 0, 0.5f);
         isDashing = false;
+        dashColorChanger.isDashing = false;
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Obstacles"),false);
         //Debug.Log(speed);
         speed -= dashSpeedIncrease;
