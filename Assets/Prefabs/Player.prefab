@@ -140,7 +140,7 @@ MonoBehaviour:
   dashSpeedIncrease: 13
   iceProjectile: {fileID: 6857567632506939881, guid: 09ab368e86ef147498e19bff58f08705, type: 3}
   iceSpellSpeedPenalty: 3
-  iceProjectileSpeed: 15
+  iceProjectileSpeed: 18
   iceProjectileCount: 3
   touchGroundSpeedPenalty: 5
   gameManager: {fileID: 0}

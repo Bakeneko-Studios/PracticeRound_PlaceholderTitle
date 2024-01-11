@@ -606,7 +606,7 @@ public class PlayerController : MonoBehaviour
             baseSpeed -= iceSpellSpeedPenalty;
             UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
             speed = baseSpeed;
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<IceProjectileController>().hitDeath();
         }
         else if (collision.gameObject.CompareTag("Cauldron"))
         {

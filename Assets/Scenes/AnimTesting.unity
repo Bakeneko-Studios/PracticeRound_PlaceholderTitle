@@ -1698,7 +1698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1310862992971862608, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: Mute
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5984797101666433985, guid: 61c885ebf62f3fa4c8cacebf551805b7, type: 3}
       propertyPath: gameplayMenu
