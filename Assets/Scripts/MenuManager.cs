@@ -62,4 +62,5 @@ public class MenuManager : MonoBehaviour
         gameplayMenu.SetActive(true);
         gameManager.enterGameplay();
     }
+
 }

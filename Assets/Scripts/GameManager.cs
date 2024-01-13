@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float higherSpeed;
 
     [Header("UI")]
+    public GameObject gamePlayUI;
     public TextMeshProUGUI returnToScreenText;
     public GameObject gameOverUI;
     public TextMeshProUGUI gameOverText;
@@ -112,6 +113,15 @@ public class GameManager : MonoBehaviour
     public GameObject cauldron;
     [SerializeField] private float minCauldronY;
     [SerializeField] private float maxCauldronY;
+
+    [Header("EndGameSlowdown")]
+    [SerializeField] private float slowdownDuration;
+    [SerializeField] private float startVal;
+    [SerializeField] private float endVal;
+
+    [Header("Postprocessing")]
+    public GameObject p1WinPp;
+    public GameObject p2WinPp;
 
     private bool isPaused;
     #endregion
@@ -532,10 +542,36 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player2: " + player2Controller.IsOutsideCameraView());
         Debug.Log("game over");
 
+        gamePlayUI.SetActive(false);
+        if (winner == 1)
+        {
+            p1WinPp.SetActive(true);
+        }
+        else
+        {
+            p2WinPp.SetActive(true);
+        }
+
         returnToScreenText.gameObject.SetActive(false);
         gameOverUI.SetActive(true);
         gameOverText.text = "Player " + winner + " Wins";
         gameOver = true;
+        
+        StartCoroutine(EndGameSlowDown());
+    }
+
+    private IEnumerator EndGameSlowDown()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < slowdownDuration)
+        {
+            Time.timeScale = Mathf.Lerp(startVal, endVal, elapsedTime / slowdownDuration);
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        Time.timeScale = 0f;
     }
     public void RestartGame()
     {

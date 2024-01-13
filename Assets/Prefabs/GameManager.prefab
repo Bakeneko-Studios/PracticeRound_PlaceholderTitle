@@ -76,6 +76,7 @@ MonoBehaviour:
   player1Controller: {fileID: 0}
   player2Controller: {fileID: 0}
   higherSpeed: 0
+  gamePlayUI: {fileID: 0}
   returnToScreenText: {fileID: 0}
   gameOverUI: {fileID: 0}
   gameOverText: {fileID: 0}
@@ -110,6 +111,9 @@ MonoBehaviour:
   cauldron: {fileID: 6961753699546115543, guid: e3fd8177a5003944eb50803dd3e8868e, type: 3}
   minCauldronY: -6
   maxCauldronY: 6
+  slowdownDuration: 2.25
+  startVal: 0.6
+  endVal: 0.2
 --- !u!82 &1310862992971862608
 AudioSource:
   m_ObjectHideFlags: 0
