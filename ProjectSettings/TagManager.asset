@@ -45,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Moon
+    uniqueID: 2139702047
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
