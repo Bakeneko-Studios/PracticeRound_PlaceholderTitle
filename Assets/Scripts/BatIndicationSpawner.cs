@@ -12,7 +12,8 @@ public class BatIndicationSpawner : MonoBehaviour
     {
         mainCamera = Camera.main;
         indication = Instantiate(batSwarmIndication, new Vector2(mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect, transform.position.y), Quaternion.identity);
-        indication.transform.position -= new Vector3(indication.GetComponent<Renderer>().bounds.size.x / 2f, 0f, 0f);
+        indication.transform.position -= new Vector3(indication.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 2f, 0f, 0f);
+        Debug.Log(indication.transform.position);
     }
 
     // Update is called once per frame
