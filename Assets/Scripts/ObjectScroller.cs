@@ -26,7 +26,7 @@ public class ObjectScroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speed = initialSpeed * (gameManager.backgroundScroller1.scrollSpeed/gameManager.initialScrollSpeed);
+        speed = initialSpeed * (1+gameManager.obstacleSpeedIncreaseRate*gameManager.higherSpeed);
         rb.velocity = new Vector2(-speed, rb.velocity.y);
     }
 

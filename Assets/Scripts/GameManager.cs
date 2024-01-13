@@ -26,11 +26,6 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
     public GameObject finishLine;
-    public GameObject background1;
-    public GameObject background2;
-    public GameObject background3;
-    public GameObject background4;
-    public GameObject background5;
 
     [Header("Camera")]
     [HideInInspector] public Camera mainCamera;
@@ -39,8 +34,16 @@ public class GameManager : MonoBehaviour
     private bool isMaxZoom;
 
     [Header("Background")]
-    public float initialScrollSpeed;
+    //public float initialScrollSpeed;
     [SerializeField] private float scrollSpeedIncreaseRate; //one more unit in the player's speed = this much increase in scroll speed
+    public BackgroundScroller treesMid;
+    public BackgroundScroller treesLeft1;
+    public BackgroundScroller treesLeft2;
+    public BackgroundScroller treesRight1;
+    public BackgroundScroller treesRight2;
+    public BackgroundScroller mountainsMid;
+    public BackgroundScroller mountainsLeft;
+    public BackgroundScroller mountainsRight;
 
     [Header("Map")]
     [SerializeField] private float mapLength;
@@ -58,16 +61,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float initialCameraSize;
     [HideInInspector] public PlayerController player1Controller;
     [HideInInspector] public PlayerController player2Controller;
-    [HideInInspector] public BackgroundScroller backgroundScroller1;
-    private BackgroundScroller backgroundScroller2;
-    private BackgroundScroller backgroundScroller3;
-    private BackgroundScroller backgroundScroller4;
-    private BackgroundScroller backgroundScroller5;
 
     private float relativeSpeed;
-    private float higherSpeed;
+    [HideInInspector] public float higherSpeed;
 
     [Header("UI")]
+    public TextMeshProUGUI returnToScreenText;
     public GameObject gameOverUI;
     public TextMeshProUGUI gameOverText;
     public GameObject deathBoom;
@@ -89,6 +88,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float towerSpawnXPos; //Distance between tower's x pos and the camera's right boundary
 
     [Header("Obstacles")]
+    public float obstacleSpeedIncreaseRate;
     [SerializeField] private float initialObstacleIntensity;
     [SerializeField] private float obstacleIntensityIncreaseRate; //amount the obstacle intensity increases by
     [SerializeField] private float obstacleIntensityIncreaseInterval; //interval (seconds) at which obstacle internsity increases
@@ -141,11 +141,13 @@ public class GameManager : MonoBehaviour
         player1Controller = player1.GetComponent<PlayerController>();
         player2Controller = player2.GetComponent<PlayerController>();
 
+        /*
         backgroundScroller1 = background1.GetComponent<BackgroundScroller>();
         backgroundScroller2 = background2.GetComponent<BackgroundScroller>();
         backgroundScroller3 = background3.GetComponent<BackgroundScroller>();
         backgroundScroller4 = background4.GetComponent<BackgroundScroller>();
         backgroundScroller5 = background5.GetComponent<BackgroundScroller>();
+        */
 
         player1Progress = 0f;
         player2Progress = 0f;
@@ -170,8 +172,8 @@ public class GameManager : MonoBehaviour
 
         player1.SetActive(false);
         player2.SetActive(false);
-        
 
+        returnToScreenText.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -218,13 +220,23 @@ public class GameManager : MonoBehaviour
         StartCoroutine(IncreaseObstacleIntensity());
         StartCoroutine(SpawnObstacles());
 
-        
 
+        /*
         backgroundScroller1.scrollSpeed = initialScrollSpeed;
         backgroundScroller2.scrollSpeed = initialScrollSpeed;
         backgroundScroller3.scrollSpeed = initialScrollSpeed;
         backgroundScroller4.scrollSpeed = initialScrollSpeed;
         backgroundScroller5.scrollSpeed = initialScrollSpeed;
+        */
+
+        treesMid.scrollSpeed = treesMid.initialScrollSpeed;
+        treesLeft1.scrollSpeed = treesLeft1.initialScrollSpeed;
+        treesLeft2.scrollSpeed = treesLeft2.initialScrollSpeed;
+        treesRight1.scrollSpeed = treesRight1.initialScrollSpeed;
+        treesRight2.scrollSpeed = treesRight2.initialScrollSpeed;
+        mountainsMid.scrollSpeed = mountainsMid.initialScrollSpeed;
+        mountainsLeft.scrollSpeed = mountainsLeft.initialScrollSpeed;
+        mountainsRight.scrollSpeed = mountainsRight.initialScrollSpeed;
     }
     #endregion
 
@@ -345,11 +357,22 @@ public class GameManager : MonoBehaviour
 
     private void AdjustBackgroundScrollSpeed()
     {
+        treesMid.scrollSpeed = treesMid.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        treesLeft1.scrollSpeed = treesLeft1.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        treesLeft2.scrollSpeed = treesLeft2.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        treesRight1.scrollSpeed = treesRight1.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        treesRight2.scrollSpeed = treesRight2.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        mountainsMid.scrollSpeed = mountainsMid.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        mountainsLeft.scrollSpeed = mountainsLeft.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        mountainsRight.scrollSpeed = mountainsRight.initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+
+        /*
         backgroundScroller1.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
         backgroundScroller2.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed );
         backgroundScroller3.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
         backgroundScroller4.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
         backgroundScroller5.scrollSpeed = initialScrollSpeed + scrollSpeedIncreaseRate * (higherSpeed);
+        */
     }
 
     private void AdjustPlayerSpeed()
@@ -460,7 +483,9 @@ public class GameManager : MonoBehaviour
         if (!gameOver){
             if (mainCamera.WorldToViewportPoint(player1.transform.position).x<0)
             {
+                returnToScreenText.gameObject.SetActive(true);
                 p1OutOfBoundsSurviveTime += Time.deltaTime;
+                returnToScreenText.text = "Get back on screen!\n"+(Mathf.Round(outOfBoundsMaxSurviveTime - p1OutOfBoundsSurviveTime) + 1);
                 if (p1OutOfBoundsSurviveTime >= outOfBoundsMaxSurviveTime)
                 {
                     Instantiate(deathBoom, new Vector3(-25, player1.transform.position.y, 0), Quaternion.identity);
@@ -470,12 +495,18 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                if (p1OutOfBoundsSurviveTime != 0f)
+                {
+                    returnToScreenText.gameObject.SetActive(false);
+                }
                 p1OutOfBoundsSurviveTime = 0f;
             }
 
             if (mainCamera.WorldToViewportPoint(player2.transform.position).x < 0)
             {
+                returnToScreenText.gameObject.SetActive(true);
                 p2OutOfBoundsSurviveTime += Time.deltaTime;
+                returnToScreenText.text = "Get back on screen!\n" + (Mathf.Round(outOfBoundsMaxSurviveTime - p2OutOfBoundsSurviveTime) + 1);
                 if (p2OutOfBoundsSurviveTime >= outOfBoundsMaxSurviveTime)
                 {
                     Instantiate(deathBoom, new Vector3(-25, player2.transform.position.y, 0), Quaternion.identity);
@@ -485,7 +516,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                if (p2OutOfBoundsSurviveTime != 0f)
+                {
+                    returnToScreenText.gameObject.SetActive(false);
+                }
                 p2OutOfBoundsSurviveTime = 0f;
+                
             }
         }
     }
@@ -495,7 +531,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player1: " + player1Controller.IsOutsideCameraView());
         Debug.Log("Player2: " + player2Controller.IsOutsideCameraView());
         Debug.Log("game over");
-        
+
+        returnToScreenText.gameObject.SetActive(false);
         gameOverUI.SetActive(true);
         gameOverText.text = "Player " + winner + " Wins";
         gameOver = true;

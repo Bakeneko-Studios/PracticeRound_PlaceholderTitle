@@ -54,16 +54,18 @@ MonoBehaviour:
   player1: {fileID: 0}
   player2: {fileID: 0}
   finishLine: {fileID: 0}
-  background1: {fileID: 0}
-  background2: {fileID: 0}
-  background3: {fileID: 0}
-  background4: {fileID: 0}
-  background5: {fileID: 0}
   mainCamera: {fileID: 0}
   cameraZoomSpeed: 2
   maxZoom: 25
-  initialScrollSpeed: 3
-  scrollSpeedIncreaseRate: 0.09
+  scrollSpeedIncreaseRate: 0.06
+  treesMid: {fileID: 0}
+  treesLeft1: {fileID: 0}
+  treesLeft2: {fileID: 0}
+  treesRight1: {fileID: 0}
+  treesRight2: {fileID: 0}
+  mountainsMid: {fileID: 0}
+  mountainsLeft: {fileID: 0}
+  mountainsRight: {fileID: 0}
   mapLength: 6000
   slowSpeed: 55
   moderateSpeed: 65
@@ -73,7 +75,8 @@ MonoBehaviour:
   initialCameraSize: 0
   player1Controller: {fileID: 0}
   player2Controller: {fileID: 0}
-  backgroundScroller1: {fileID: 0}
+  higherSpeed: 0
+  returnToScreenText: {fileID: 0}
   gameOverUI: {fileID: 0}
   gameOverText: {fileID: 0}
   deathBoom: {fileID: 0}
@@ -90,6 +93,7 @@ MonoBehaviour:
   maxTowerY: -8.5
   minTowerY: -14.5
   towerSpawnXPos: 10
+  obstacleSpeedIncreaseRate: 0.045
   initialObstacleIntensity: 1.35
   obstacleIntensityIncreaseRate: 0.35
   obstacleIntensityIncreaseInterval: 4.5

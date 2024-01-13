@@ -5,13 +5,15 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
 
-    public float scrollSpeed;
+    public float initialScrollSpeed;
+    [HideInInspector] public float scrollSpeed;
     private float offset;
     private Material mat;
     // Start is called before the first frame update
     void Start()
     {
         mat = GetComponent<Renderer>().material;
+        scrollSpeed = 0;
     }
 
     // Update is called once per frame

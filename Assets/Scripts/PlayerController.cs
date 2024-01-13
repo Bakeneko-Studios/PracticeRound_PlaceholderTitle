@@ -12,11 +12,16 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
 
     [Header("UI")]
+    //public TextManager textManager;
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI speedIncreaseText;
     [SerializeField] private float speedIncreaseTextAppearDuration;
     private Animator speedIncreaseTextAnimator;
     private bool isSpeedIncreaseTextAppearing;
+    public GameObject getThunderText;
+    public GameObject getIceText;
+    public GameObject getDashText;
+    [SerializeField] private float getSpellTextDuration;
     public TextMeshProUGUI spellText;
     [SerializeField] private string thunderboltName;
     [SerializeField] private string dashName;
@@ -429,6 +434,36 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region UI Functions
+
+    private IEnumerator ShowThunderboltText()
+    {
+        getDashText.SetActive(false);
+        getIceText.SetActive(false);
+        getThunderText.SetActive(true);
+
+        yield return new WaitForSeconds(getSpellTextDuration);
+        getThunderText.SetActive(false);
+    }
+
+    private IEnumerator ShowIceText()
+    {
+        getDashText.SetActive(false);
+        getThunderText.SetActive(false);
+        getIceText.SetActive(true);
+
+        yield return new WaitForSeconds(getSpellTextDuration);
+        getIceText.SetActive(false);
+    }
+
+    private IEnumerator ShowDashText()
+    {
+        getThunderText.SetActive(false);
+        getIceText.SetActive(false);
+        getDashText.SetActive(true);
+
+        yield return new WaitForSeconds(getSpellTextDuration);
+        getDashText.SetActive(false);
+    }
     private void UpdateSpeedText()
     {
         /*
@@ -617,8 +652,23 @@ public class PlayerController : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Cauldron>().isSpilled)
             {
-                int index = Random.Range(0, System.Enum.GetValues(typeof(Spell)).Length);
+                int index = Random.Range(1, System.Enum.GetValues(typeof(Spell)).Length-1);
                 equippedSpell = (Spell)index;
+                switch (index)
+                {
+                    case 1:
+                        StopCoroutine(ShowThunderboltText());
+                        StartCoroutine(ShowThunderboltText());
+                        return;
+                    case 2:
+                        StopCoroutine(ShowDashText());
+                        StartCoroutine(ShowDashText());
+                        return;
+                    case 3:
+                        StopCoroutine(ShowIceText());
+                        StartCoroutine(ShowIceText());
+                        return;
+                }
                 iceProjectilesLeft = iceProjectileCount;
                 UpdateSpellText();
 
@@ -642,16 +692,22 @@ public class PlayerController : MonoBehaviour
             else if (name.Contains("ThunderboltEnergyOrb"))
             {
                 equippedSpell = Spell.thunderbolt;
+                StopCoroutine(ShowThunderboltText());
+                StartCoroutine(ShowThunderboltText());
                 //spellText.text = "Spell:\n" + thunderboltName;
             }
             else if (name.Contains("DashEnergyOrb"))
             {
                 equippedSpell = Spell.dash;
+                StopCoroutine(ShowDashText());
+                StartCoroutine(ShowDashText());
                 //spellText.text = "Spell:\n" + dashName;
             }
             else if (name.Contains("IceEnergyOrb"))
             {
                 equippedSpell = Spell.ice;
+                StopCoroutine(ShowIceText());
+                StartCoroutine(ShowIceText());
                 //spellText.text = "Spell:\n" + iceName;
                 iceProjectilesLeft = iceProjectileCount;
             }
