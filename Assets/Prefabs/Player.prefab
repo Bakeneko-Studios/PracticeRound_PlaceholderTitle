@@ -103,6 +103,10 @@ MonoBehaviour:
   speedText: {fileID: 0}
   speedIncreaseText: {fileID: 0}
   speedIncreaseTextAppearDuration: 4
+  getThunderText: {fileID: 0}
+  getIceText: {fileID: 0}
+  getDashText: {fileID: 0}
+  getSpellTextDuration: 0
   spellText: {fileID: 0}
   thunderboltName: Thunderbolt
   dashName: Spectral Dash
@@ -124,14 +128,13 @@ MonoBehaviour:
   jumpForce: 13
   jumpCooldown: 0.225
   normalOrbSpeedIncrease: 2
-  hopsPerOrb: 1
-  specialEnergyOrbChance: 0.2
+  hopsPerOrb: 2
+  specialEnergyOrbChance: 0.4
   normalEnergyOrb: {fileID: 1034021959245197484, guid: 0fc7f8a802ddeba45934572865377f6c, type: 3}
   specialEnergyOrbList:
   - {fileID: 2544178921802305349, guid: da0e694a1ac5a354ebff154488366af9, type: 3}
   - {fileID: 2442290661798075779, guid: d8cf557c972bd284d92f62da1c48b5eb, type: 3}
   - {fileID: 4971652192371800060, guid: fef6714079c60454b94301e3c329ecd3, type: 3}
-  - {fileID: 151697213410889829, guid: 68206e8687ffa964f9dc8ba25dc0170c, type: 3}
   thunderbolt: {fileID: 5515962316236393386, guid: cf5ced2d89841624d996daf7558efb2d, type: 3}
   thunderboltAppearDuration: 0.1
   thunderboltSpeedPenalty: 8

@@ -10,6 +10,7 @@ public class IceProjectileController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim;
+    private AudioSource deathSFX;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -18,6 +19,8 @@ public class IceProjectileController : MonoBehaviour
         rb.velocity = speed*new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         StartCoroutine(SelfDestruct());
+
+        deathSFX = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -41,6 +44,8 @@ public class IceProjectileController : MonoBehaviour
     {
         rb.velocity = new Vector2(0f,0f);
         anim.SetTrigger("isDeath");
+
+        deathSFX.PlayOneShot(deathSFX.clip);
 
         yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);

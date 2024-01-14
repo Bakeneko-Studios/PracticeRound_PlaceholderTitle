@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     public GameObject SFXManager;
     private AudioSource getEnergyOrbSFX;
     private AudioSource dashSFX;
+    private AudioSource iceShootSFX;
+    private AudioSource batHitSFX;
+    private AudioSource jumpSFX;
 
     [Header("Obstacles")]
     [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
@@ -131,6 +134,15 @@ public class PlayerController : MonoBehaviour
                     break;
                 case "Dash":
                     dashSFX = source;
+                    break;
+                case "IceSpellShootSHORT":
+                    iceShootSFX = source;
+                    break;
+                case "BatHitLONG":
+                    batHitSFX = source;
+                    break;
+                case "PlayerJump":
+                    jumpSFX = source;
                     break;
             }
         }
@@ -245,6 +257,7 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(transform.up*jumpForce*(isTouchingTower?touchingTowerJumpBoost:1f), ForceMode2D.Impulse);
+                jumpSFX.PlayOneShot(jumpSFX.clip);
 
             StartCoroutine(JumpCooldown());
 
@@ -392,6 +405,8 @@ public class PlayerController : MonoBehaviour
 
     private void CastIceSpell()
     {
+        iceShootSFX.PlayOneShot(iceShootSFX.clip);
+        
         //iceProjectilesLeft = iceProjectileCount;
         if (iceProjectilesLeft == 3)
         {
@@ -640,6 +655,7 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
+            batHitSFX.PlayOneShot(batHitSFX.clip);
         }
         else if (collision.gameObject.CompareTag("Ice Projectile") && !isDashing)
         {
