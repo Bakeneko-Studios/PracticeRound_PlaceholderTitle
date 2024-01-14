@@ -366,6 +366,7 @@ public class PlayerController : MonoBehaviour
         spellText.text = "Spell:\n";
         yield return new WaitForSeconds(thunderboltAppearDuration);
         thunderbolt.SetActive(false);
+        getThunderText.SetActive(false);
     }
 
     private IEnumerator GetHitThunderbolt()
@@ -393,6 +394,7 @@ public class PlayerController : MonoBehaviour
         //StopCoroutine(ResetToBaseSpeed());
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         sr.color -= new Color(0, 0, 0, 0.5f);
+        getDashText.SetActive(false);
         yield return new WaitForSeconds(dashDuration);
         sr.color += new Color(0, 0, 0, 0.5f);
         isDashing = false;
@@ -401,6 +403,8 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(speed);
         speed -= dashSpeedIncrease;
         //StartCoroutine(ResetToBaseSpeed());
+
+        
     }
 
     private void CastIceSpell()
@@ -430,7 +434,10 @@ public class PlayerController : MonoBehaviour
         {
             equippedSpell = Spell.unequipped;
             spellText.text = "Spell:\n";
+            getIceText.SetActive(false);
         }
+
+        
     }
 
     private void SpawnIceProjectile(float angle)

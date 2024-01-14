@@ -106,7 +106,7 @@ MonoBehaviour:
   getThunderText: {fileID: 0}
   getIceText: {fileID: 0}
   getDashText: {fileID: 0}
-  getSpellTextDuration: 0
+  getSpellTextDuration: 100
   spellText: {fileID: 0}
   thunderboltName: Thunderbolt
   dashName: Spectral Dash
@@ -115,7 +115,7 @@ MonoBehaviour:
   SFXManager: {fileID: 0}
   touchingTowerJumpBoost: 1.3
   touchBatSwarmSpeedPenalty: 5
-  cauldronSpeedIncrease: 5
+  cauldronSpeedIncrease: 4
   rightBoundaryWidth: 12
   initialSpeed: 60
   baseSpeed: 0
