@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         #region Initialize Variables
+        Time.timeScale = 1;
+
         gameState = "MainMenu";
 
         lowPassFilter = GetComponent<AudioLowPassFilter>();
