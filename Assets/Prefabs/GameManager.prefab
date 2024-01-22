@@ -69,10 +69,10 @@ MonoBehaviour:
   mountainsLeft: {fileID: 0}
   mountainsRight: {fileID: 0}
   mapLength: 8000
-  slowSpeed: 61.5
-  moderateSpeed: 71
-  fastSpeed: 80
-  extremeSpeed: 95
+  slowSpeed: 70
+  moderateSpeed: 80
+  fastSpeed: 90
+  extremeSpeed: 97.5
   relativeSpeedMultiplier: 0.325
   initialCameraSize: 0
   player1Controller: {fileID: 0}
@@ -118,8 +118,8 @@ MonoBehaviour:
   endVal: 0.2
   p1WinPp: {fileID: 0}
   p2WinPp: {fileID: 0}
-  minMMBatInterval: 2
-  maxMMBatInterval: 7.5
+  minMMBatInterval: 4.5
+  maxMMBatInterval: 8.5
 --- !u!82 &1310862992971862608
 AudioSource:
   m_ObjectHideFlags: 0

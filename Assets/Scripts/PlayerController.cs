@@ -294,9 +294,9 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(speed);
         }
 
-            if (speed < 35f)
+            if (speed < 45f)
             {
-                speed = 35f;
+                speed = 45f;
             }
             UpdateSpeedText();
             //SetSpeedIncreaseTextColor();

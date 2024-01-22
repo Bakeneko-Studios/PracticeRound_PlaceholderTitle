@@ -53,7 +53,7 @@ public class IceProjectileController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle")|| collision.gameObject.CompareTag("Tower")|| collision.gameObject.name == "Ground" || collision.gameObject.name == "Ceiling")
+        if ( collision.gameObject.CompareTag("Tower")|| collision.gameObject.name == "Ground" || collision.gameObject.name == "Ceiling")
         {
             hitDeath();
         }
