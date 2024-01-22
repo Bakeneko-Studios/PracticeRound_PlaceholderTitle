@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     public string gameState;
     
     [Header("Audio")]
-    public AudioSource music;
+    public AudioSource inGameMusic;
+    public AudioSource mainMenuMusic;
+    public AudioSource mainMenuAmbience;
     private AudioLowPassFilter lowPassFilter;
     private float unmuffledFrequency;
     [SerializeField] private float muffledFrequency;
@@ -123,6 +125,10 @@ public class GameManager : MonoBehaviour
     public GameObject p1WinPp;
     public GameObject p2WinPp;
 
+    [Header("MainMenuBats")]
+    [SerializeField] private float minMMBatInterval;
+    [SerializeField] private float maxMMBatInterval;
+
     private bool isPaused;
     #endregion
 
@@ -143,7 +149,7 @@ public class GameManager : MonoBehaviour
 
         gameState = "MainMenu";
 
-        lowPassFilter = GetComponent<AudioLowPassFilter>();
+        lowPassFilter = inGameMusic.gameObject.GetComponent<AudioLowPassFilter>();
         unmuffledFrequency = lowPassFilter.cutoffFrequency;
 
         mainCamera = Camera.main;
@@ -186,6 +192,11 @@ public class GameManager : MonoBehaviour
         player2.SetActive(false);
 
         returnToScreenText.gameObject.SetActive(false);
+
+        StartCoroutine(BeginMainMenuMusic());
+        mainMenuAmbience.Play();
+
+        StartCoroutine(SpawnMainMenuBats());
     }
 
     // Start is called before the first frame update
@@ -224,6 +235,10 @@ public class GameManager : MonoBehaviour
     #region GameState Functions
     public void enterGameplay()
     {
+        mainMenuMusic.Stop();
+        mainMenuAmbience.Stop();
+        inGameMusic.Play();
+
         player1.SetActive(true);
         player2.SetActive(true);
         gameState = "Gameplay";
@@ -249,6 +264,13 @@ public class GameManager : MonoBehaviour
         mountainsMid.scrollSpeed = mountainsMid.initialScrollSpeed;
         mountainsLeft.scrollSpeed = mountainsLeft.initialScrollSpeed;
         mountainsRight.scrollSpeed = mountainsRight.initialScrollSpeed;
+
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Obstacle"); //Destroy all bats
+
+        foreach (GameObject obj in objectsWithTag)
+        {
+            Destroy(obj);
+        }
     }
     #endregion
 
@@ -341,24 +363,28 @@ public class GameManager : MonoBehaviour
     {
         player1Controller.initialSpeed = slowSpeed;
         player2Controller.initialSpeed = slowSpeed;
+        mapLength *= (slowSpeed / 65f);
     }
 
     public void setModerateSpeed()
     {
         player1Controller.initialSpeed = moderateSpeed;
         player2Controller.initialSpeed = moderateSpeed;
+        mapLength *= (moderateSpeed / 65f);
     }
 
     public void setFastSpeed()
     {
         player1Controller.initialSpeed = fastSpeed;
         player2Controller.initialSpeed = fastSpeed;
+        mapLength *= (fastSpeed / 65f);
     }
 
     public void setExtremeSpeed()
     {
         player1Controller.initialSpeed = extremeSpeed;
         player2Controller.initialSpeed = extremeSpeed;
+        mapLength *= (extremeSpeed / 65f);
     }
 
     private void calculateSpeed()
@@ -449,6 +475,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnMainMenuBats()
+    {
+        while (gameState == "MainMenu")
+        {
+            yield return new WaitForSeconds(Random.Range(minMMBatInterval, maxMMBatInterval));
+
+            SpawnBat();
+        }
+    }
+
     private void SpawnBat()
     {
         float random = Random.Range(0f, 1f);
@@ -473,10 +509,14 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < numberOfBats; i++)
         {
-            Instantiate(batSwarm, new Vector3(
+            GameObject swarm=Instantiate(batSwarm, new Vector3(
                 mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + Random.Range(minBatSwarmX, maxBatSwarmX),
                 Random.Range(minBatSwarmY, maxBatSwarmY), 0f),
                 Quaternion.identity);
+            if (gameState == "MainMenu")
+            {
+                swarm.GetComponent<BatIndicationSpawner>().isDeactivate = true;
+            }
         }
     }
 
@@ -583,4 +623,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentSceneName);
     }
     #endregion
+
+    private IEnumerator BeginMainMenuMusic()
+    {
+        yield return new WaitForSeconds(2f);
+        if (gameState == "MainMenu")
+        {
+            mainMenuMusic.Play();
+        }
+    }
 }

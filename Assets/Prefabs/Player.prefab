@@ -127,9 +127,9 @@ MonoBehaviour:
   minGravity: 5
   jumpForce: 13
   jumpCooldown: 0.225
-  normalOrbSpeedIncrease: 2
-  hopsPerOrb: 2
-  specialEnergyOrbChance: 0.4
+  normalOrbSpeedIncrease: 1
+  hopsPerOrb: 1
+  specialEnergyOrbChance: 0.25
   normalEnergyOrb: {fileID: 1034021959245197484, guid: 0fc7f8a802ddeba45934572865377f6c, type: 3}
   specialEnergyOrbList:
   - {fileID: 2544178921802305349, guid: da0e694a1ac5a354ebff154488366af9, type: 3}

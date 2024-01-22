@@ -291,8 +291,13 @@ public class PlayerController : MonoBehaviour
         #endregion
             if (isDashing)
         {
-            Debug.Log(speed);
+            //Debug.Log(speed);
         }
+
+            if (speed < 35f)
+            {
+                speed = 35f;
+            }
             UpdateSpeedText();
             //SetSpeedIncreaseTextColor();
         }
