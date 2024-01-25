@@ -114,7 +114,7 @@ MonoBehaviour:
   shieldName: Protection Aura
   SFXManager: {fileID: 0}
   touchingTowerJumpBoost: 1.3
-  touchBatSwarmSpeedPenalty: 5
+  touchBatSwarmSpeedPenalty: 4
   cauldronSpeedIncrease: 4
   rightBoundaryWidth: 12
   initialSpeed: 60
@@ -145,7 +145,7 @@ MonoBehaviour:
   iceSpellSpeedPenalty: 3
   iceProjectileSpeed: 18
   iceProjectileCount: 3
-  touchGroundSpeedPenalty: 5
+  touchGroundSpeedPenalty: 2
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
 BoxCollider2D:

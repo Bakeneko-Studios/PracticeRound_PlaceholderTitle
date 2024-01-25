@@ -52,7 +52,7 @@ MonoBehaviour:
   mainMenuMusic: {fileID: 0}
   mainMenuAmbience: {fileID: 0}
   muffledFrequency: 1000
-  outOfBoundsMaxSurviveTime: 3.5
+  outOfBoundsMaxSurviveTime: 6
   player1: {fileID: 0}
   player2: {fileID: 0}
   finishLine: {fileID: 0}
@@ -68,12 +68,12 @@ MonoBehaviour:
   mountainsMid: {fileID: 0}
   mountainsLeft: {fileID: 0}
   mountainsRight: {fileID: 0}
-  mapLength: 8000
-  slowSpeed: 70
-  moderateSpeed: 80
-  fastSpeed: 90
-  extremeSpeed: 97.5
-  relativeSpeedMultiplier: 0.325
+  mapLength: 8350
+  slowSpeed: 67.5
+  moderateSpeed: 75
+  fastSpeed: 82.5
+  extremeSpeed: 90
+  relativeSpeedMultiplier: 0.3
   initialCameraSize: 0
   player1Controller: {fileID: 0}
   player2Controller: {fileID: 0}

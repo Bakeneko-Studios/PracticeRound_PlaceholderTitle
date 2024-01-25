@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxMMBatInterval;
 
     private bool isPaused;
+    private bool isSetMapLength;
     #endregion
 
     #region Component Declaration
@@ -146,6 +147,8 @@ public class GameManager : MonoBehaviour
     {
         #region Initialize Variables
         Time.timeScale = 1;
+
+        isSetMapLength = false;
 
         gameState = "MainMenu";
 
@@ -363,28 +366,46 @@ public class GameManager : MonoBehaviour
     {
         player1Controller.initialSpeed = slowSpeed;
         player2Controller.initialSpeed = slowSpeed;
-        mapLength *= (slowSpeed / 65f);
+        if (!isSetMapLength)
+        {
+            mapLength *= (slowSpeed / moderateSpeed);
+            isSetMapLength = true;
+        }
     }
 
     public void setModerateSpeed()
     {
         player1Controller.initialSpeed = moderateSpeed;
         player2Controller.initialSpeed = moderateSpeed;
-        mapLength *= (moderateSpeed / 65f);
+        if (!isSetMapLength)
+        {
+            mapLength *= (moderateSpeed / moderateSpeed);
+            isSetMapLength = true;
+        }
+           
     }
 
     public void setFastSpeed()
     {
         player1Controller.initialSpeed = fastSpeed;
         player2Controller.initialSpeed = fastSpeed;
-        mapLength *= (fastSpeed / 65f);
+        
+        if (!isSetMapLength)
+        {
+            mapLength *= (fastSpeed / moderateSpeed);
+            isSetMapLength = true;
+        }
     }
 
     public void setExtremeSpeed()
     {
         player1Controller.initialSpeed = extremeSpeed;
         player2Controller.initialSpeed = extremeSpeed;
-        mapLength *= (extremeSpeed / 65f);
+        if (!isSetMapLength)
+        {
+            mapLength *= (extremeSpeed / moderateSpeed);
+            isSetMapLength = true;
+        }
     }
 
     private void calculateSpeed()
@@ -525,7 +546,7 @@ public class GameManager : MonoBehaviour
         GameObject spawnedCauldron=Instantiate(cauldron, new Vector3(mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect + 15f,
             Random.Range(minCauldronY, maxCauldronY), 0f), Quaternion.identity);
 
-        //spawnedCauldron.GetComponent<Cauldron>().spillWaitTime *= (mainCamera.orthographicSize / initialCameraSize);
+        spawnedCauldron.GetComponent<Cauldron>().spillWaitTime *= (player1Controller.initialSpeed/moderateSpeed);
     }
     #endregion
 
