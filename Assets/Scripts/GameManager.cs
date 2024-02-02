@@ -15,9 +15,11 @@ public class GameManager : MonoBehaviour
     public AudioSource inGameMusic;
     public AudioSource mainMenuMusic;
     public AudioSource mainMenuAmbience;
+    public AudioSource gameEndMusic;
     private AudioLowPassFilter lowPassFilter;
     private float unmuffledFrequency;
     [SerializeField] private float muffledFrequency;
+    [SerializeField] private float superMuffledFrequency;
 
     [Header("Win Conditions")]
     [SerializeField] private float outOfBoundsMaxSurviveTime;
@@ -205,7 +207,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        lowPassFilter.cutoffFrequency = unmuffledFrequency;
     }
 
     // Update is called once per frame
@@ -284,6 +286,7 @@ public class GameManager : MonoBehaviour
         {
             lowPassFilter.cutoffFrequency = muffledFrequency;
             pauseIndicationText.SetActive(false);
+            gamePlayUI.SetActive(false);
             //TODO: Show pause menu
             Time.timeScale = 0;
             isPaused = true;
@@ -297,6 +300,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Unpause()
     {
+        gamePlayUI.SetActive(true);
         unpauseText.gameObject.SetActive(true);
         unpauseText.text = "3";
         yield return new WaitForSecondsRealtime(1);
@@ -619,6 +623,10 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
         gameOverText.text = "Player " + winner + " Wins";
         gameOver = true;
+
+        gameEndMusic.Play();
+        lowPassFilter.cutoffFrequency = superMuffledFrequency;
+        //inGameMusic.Stop();
         
         StartCoroutine(EndGameSlowDown());
     }

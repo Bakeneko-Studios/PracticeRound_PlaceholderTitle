@@ -51,6 +51,7 @@ MonoBehaviour:
   inGameMusic: {fileID: 0}
   mainMenuMusic: {fileID: 0}
   mainMenuAmbience: {fileID: 0}
+  gameEndMusic: {fileID: 0}
   muffledFrequency: 1000
   outOfBoundsMaxSurviveTime: 6
   player1: {fileID: 0}
