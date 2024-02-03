@@ -9,6 +9,7 @@ public class Cauldron : MonoBehaviour
     private float[] angleList = { 45f, 135f, 215f, 305f };
     private GameObject cauldronIndicationAxis;
     private GameObject magicFluid;
+    private Animator anim;
 
     [SerializeField] private float spillDuration;
 
@@ -21,6 +22,8 @@ public class Cauldron : MonoBehaviour
         cauldronIndicationAxis = transform.GetChild(1).gameObject;
         magicFluid = transform.GetChild(2).gameObject;
         magicFluid.SetActive(false);
+
+        anim = transform.GetChild(0).GetChild(0).gameObject.GetComponent<Animator>();
 
         int index = Random.Range(0, angleList.Length);
         spillAngle = angleList[index];
@@ -36,6 +39,7 @@ public class Cauldron : MonoBehaviour
         yield return new WaitForSeconds(spillWaitTime);
 
         cauldronIndicationAxis.SetActive(false);
+        anim.SetTrigger("isLook");
 
         float elapsedTime = 0f;
         float startRotationZ = spillAngle<=180f? 0f:360f;

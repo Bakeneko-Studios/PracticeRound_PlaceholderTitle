@@ -45,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 1283518837
+    locked: 0
   - name: Moon
     uniqueID: 2139702047
     locked: 0
