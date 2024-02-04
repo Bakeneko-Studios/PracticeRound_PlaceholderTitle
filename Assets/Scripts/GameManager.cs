@@ -504,9 +504,9 @@ public class GameManager : MonoBehaviour
     {
         while (gameState == "MainMenu")
         {
-            yield return new WaitForSeconds(Random.Range(minMMBatInterval, maxMMBatInterval));
-
             SpawnBat();
+
+            yield return new WaitForSeconds(Random.Range(minMMBatInterval, maxMMBatInterval));
         }
     }
 
@@ -650,6 +650,13 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+    }
+    #endregion
+
+    #region General
+    public void Quit()
+    {
+        Application.Quit();
     }
     #endregion
 

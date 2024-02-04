@@ -10,6 +10,9 @@ public class MenuManager : MonoBehaviour
     public GameObject startingMenu;
     public GameObject selectModeMenu;
     public GameObject gameplayMenu;
+    public GameObject mainMenuTower;
+    public GameObject mainMenuP1;
+    public GameObject mainMenuP2;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,9 @@ public class MenuManager : MonoBehaviour
         startingMenu.SetActive(false);
         selectModeMenu.SetActive(false);
         gameplayMenu.SetActive(false);
+
+        mainMenuP1.SetActive(true);
+        mainMenuP2.SetActive(true);
 
         displayStartingMenu();
     }
@@ -59,8 +65,12 @@ public class MenuManager : MonoBehaviour
     public void startGame()
     {
         selectModeMenu.SetActive(false);
+        mainMenuTower.SetActive(false);
         gameplayMenu.SetActive(true);
         gameManager.enterGameplay();
+
+        mainMenuP1.SetActive(false);
+        mainMenuP2.SetActive(false);
     }
 
 }
