@@ -653,13 +653,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region General
-    public void Quit()
-    {
-        Application.Quit();
-    }
-    #endregion
-
     private IEnumerator BeginMainMenuMusic()
     {
         yield return new WaitForSeconds(2f);
