@@ -26,7 +26,7 @@ public class BatIndicationSpawner : MonoBehaviour
     {
         if (!isDeactivate)
         {
-            Debug.Log("error");
+            //Debug.Log("error");
             if (transform.position.x <= mainCamera.transform.position.x + 1f * mainCamera.orthographicSize * mainCamera.aspect)
             {
                 Destroy(indication);

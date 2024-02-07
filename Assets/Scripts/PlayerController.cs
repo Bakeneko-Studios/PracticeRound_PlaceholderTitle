@@ -349,9 +349,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator CastThunderbolt()
     {
         thunderbolt.SetActive(true);
+        thunderbolt.transform.localPosition = new Vector3(40f, 0f, transform.position.z);
+        //Debug.Log("starting pos:" + thunderbolt.transform.position);
         equippedSpell = Spell.unequipped;
         spellText.text = "Spell:\n";
         yield return new WaitForSeconds(thunderboltAppearDuration);
+        //Debug.Log("ending pos:" + thunderbolt.transform.position);
         thunderbolt.SetActive(false);
         getThunderText.SetActive(false);
     }
