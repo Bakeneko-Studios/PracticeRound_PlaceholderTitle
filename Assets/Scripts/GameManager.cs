@@ -83,6 +83,8 @@ public class GameManager : MonoBehaviour
     private float progressIconXDistance;
     public GameObject pauseIndicationText;
     public TextMeshProUGUI unpauseText;
+    public GameObject pauseMenu;
+    public GameObject crystalBall;
 
     [Header("Tower")]
     public GameObject tower;
@@ -288,6 +290,8 @@ public class GameManager : MonoBehaviour
             pauseIndicationText.SetActive(false);
             gamePlayUI.SetActive(false);
             //TODO: Show pause menu
+            pauseMenu.SetActive(true);
+            crystalBall.SetActive(true);
             Time.timeScale = 0;
             isPaused = true;
         }
@@ -295,6 +299,8 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(Unpause());
             //TODO: Hide pause menu
+            pauseMenu.SetActive(false);
+            crystalBall.SetActive(false);
         }
     }
 
