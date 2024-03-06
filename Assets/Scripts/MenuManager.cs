@@ -16,6 +16,7 @@ public class MenuManager : MonoBehaviour
     public GameObject mainMenuP2;
     public GameObject title;
     public GameObject tutorialUI;
+    public GameObject creditsUI;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class MenuManager : MonoBehaviour
         title.SetActive(true);
 
         tutorialUI.SetActive(false);
+        creditsUI.SetActive(false);
 
         displayStartingMenu();
     }
@@ -57,9 +59,14 @@ public class MenuManager : MonoBehaviour
         tutorialUI.SetActive(false);
     }
 
-    public void displayOptions()
+    public void displayCredits()
     {
-        //TODO
+        creditsUI.SetActive(true);
+    }
+
+    public void hideCredits()
+    {
+        creditsUI.SetActive(false);
     }
 
     public void quit()

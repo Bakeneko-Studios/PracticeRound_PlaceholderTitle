@@ -126,7 +126,7 @@ MonoBehaviour:
   gravity: 24
   minGravity: 5
   jumpForce: 13
-  jumpCooldown: 0.225
+  jumpCooldown: 0.1
   normalOrbSpeedIncrease: 1
   hopsPerOrb: 1
   specialEnergyOrbChance: 0.25
