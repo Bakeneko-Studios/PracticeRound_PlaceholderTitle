@@ -280,6 +280,10 @@ public class PlayerController : MonoBehaviour
             {
                 speed = 45f;
             }
+            if (baseSpeed < 45f)
+            {
+                baseSpeed = 45f;
+            }
             UpdateSpeedText();
             //SetSpeedIncreaseTextColor();
         }
