@@ -113,10 +113,12 @@ MonoBehaviour:
   iceName: Hailstorm
   shieldName: Protection Aura
   SFXManager: {fileID: 0}
-  touchingTowerJumpBoost: 1.3
-  touchBatSwarmSpeedPenalty: 4
-  cauldronSpeedIncrease: 4
+  hitParticle: {fileID: 0}
+  touchingTowerJumpBoost: 2
+  touchBatSwarmSpeedPenalty: 2
+  cauldronSpeedIncrease: 6
   rightBoundaryWidth: 12
+  leftBoundaryWidth: 0
   initialSpeed: 60
   baseSpeed: 0
   speed: 0
@@ -137,15 +139,15 @@ MonoBehaviour:
   - {fileID: 4971652192371800060, guid: fef6714079c60454b94301e3c329ecd3, type: 3}
   thunderbolt: {fileID: 5515962316236393386, guid: cf5ced2d89841624d996daf7558efb2d, type: 3}
   thunderboltAppearDuration: 0.1
-  thunderboltSpeedPenalty: 8
+  thunderboltSpeedPenalty: 5
   thunderboltStunDuration: 1.5
   dashDuration: 0.65
   dashSpeedIncrease: 13
   iceProjectile: {fileID: 6857567632506939881, guid: 09ab368e86ef147498e19bff58f08705, type: 3}
-  iceSpellSpeedPenalty: 3
+  iceSpellSpeedPenalty: 2
   iceProjectileSpeed: 18
   iceProjectileCount: 3
-  touchGroundSpeedPenalty: 2
+  touchGroundSpeedPenalty: 0
   gameManager: {fileID: 0}
 --- !u!61 &3276343478905212602
 BoxCollider2D:

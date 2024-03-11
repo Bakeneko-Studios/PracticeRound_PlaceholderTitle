@@ -53,13 +53,14 @@ MonoBehaviour:
   mainMenuAmbience: {fileID: 0}
   gameEndMusic: {fileID: 0}
   muffledFrequency: 1000
+  superMuffledFrequency: 400
   outOfBoundsMaxSurviveTime: 6
   player1: {fileID: 0}
   player2: {fileID: 0}
   finishLine: {fileID: 0}
   mainCamera: {fileID: 0}
   cameraZoomSpeed: 2
-  maxZoom: 25
+  maxZoom: 40
   scrollSpeedIncreaseRate: 0.06
   treesMid: {fileID: 0}
   treesLeft1: {fileID: 0}
@@ -91,6 +92,8 @@ MonoBehaviour:
   progressIconFinalX: 82.5
   pauseIndicationText: {fileID: 0}
   unpauseText: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  crystalBall: {fileID: 0}
   tower: {fileID: 409080578534993676, guid: 84c856e912872d14bb675ec417edef4e, type: 3}
   minSpawnTowerInterval: 1.5
   maxSpawnTowerInterval: 7.5
@@ -257,3 +260,9 @@ MonoBehaviour:
   startingMenu: {fileID: 0}
   selectModeMenu: {fileID: 0}
   gameplayMenu: {fileID: 0}
+  mainMenuTower: {fileID: 0}
+  mainMenuP1: {fileID: 0}
+  mainMenuP2: {fileID: 0}
+  title: {fileID: 0}
+  tutorialUI: {fileID: 0}
+  creditsUI: {fileID: 0}

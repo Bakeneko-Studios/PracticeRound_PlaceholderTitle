@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     private AudioSource batHitSFX;
     private AudioSource jumpSFX;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem hitParticle;
+
     [Header("Obstacles")]
     [SerializeField] private float touchingTowerJumpBoost; //increase jumpforce when touching tower
     [SerializeField] private float touchBatSwarmSpeedPenalty;
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private float rightBoundaryWidth;
+    [SerializeField] private float leftBoundaryWidth;
 
     [Header("Speed")]
     public float initialSpeed; //Default speed at game start
@@ -606,15 +610,17 @@ public class PlayerController : MonoBehaviour
 
         float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth);
         //float deltaY = Mathf.Max(0, Mathf.Abs(transform.position.y - mainCamera.transform.position.y) - cameraHalfHeight);
-
+        return deltaX + rightBoundaryWidth;
+        /*
         if (transform.position.x >= mainCamera.transform.position.x)
         {
             return deltaX + rightBoundaryWidth;
         }
         else
         {
-            return -deltaX;
+            return -deltaX-leftBoundaryWidth;
         }
+        */
     }
 
     #region Collisions
@@ -662,6 +668,7 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed -= iceSpellSpeedPenalty;
             UpdateSpeedIncreaseText("-" + iceSpellSpeedPenalty);
+            hitParticle.Play();
             speed = baseSpeed;
             collision.gameObject.GetComponent<IceProjectileController>().hitDeath();
         }
@@ -704,6 +711,7 @@ public class PlayerController : MonoBehaviour
             string name = collision.gameObject.name;
             if (name == "P1Thunderbolt" && !isPlayer1 || name=="P2Thunderbolt" && isPlayer1) 
             {
+                hitParticle.Play();
                 StartCoroutine(GetHitThunderbolt());
             }
             else if (name.Contains("ThunderboltEnergyOrb"))
