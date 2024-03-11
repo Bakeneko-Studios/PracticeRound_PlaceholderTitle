@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float cameraZoomSpeed;
     [SerializeField] private float maxZoom;
     private bool isMaxZoom;
+    [SerializeField] private float minZoom;
+    private bool isMinZoom;
 
     [Header("Background")]
     //public float initialScrollSpeed;
@@ -162,6 +164,7 @@ public class GameManager : MonoBehaviour
         mainCamera = Camera.main;
         initialCameraSize = mainCamera.orthographicSize;
         isMaxZoom = false;
+        isMinZoom = false;
 
         player1Controller = player1.GetComponent<PlayerController>();
         player2Controller = player2.GetComponent<PlayerController>();
@@ -346,10 +349,11 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Player 1 delta x: " + deltaXPlayer1);
         //Debug.Log("Player 2 delta x: " + deltaXPlayer2);
 
-        if (Mathf.Max(deltaXPlayer1, deltaXPlayer2) >= 0)
+        float largerDelta = (Mathf.Abs(deltaXPlayer1) > Mathf.Abs(deltaXPlayer2) ? deltaXPlayer1 : deltaXPlayer2);
+        if (largerDelta!= 0)
         {
-            float newOrthographicSize = initialCameraSize + Mathf.Max(deltaXPlayer1, deltaXPlayer2);
-            if (!isMaxZoom || newOrthographicSize < mainCamera.orthographicSize)
+            float newOrthographicSize = initialCameraSize + largerDelta;
+            if (!(isMaxZoom && newOrthographicSize>mainCamera.orthographicSize|| isMinZoom && newOrthographicSize < mainCamera.orthographicSize))
             {
                 mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, newOrthographicSize, Time.deltaTime * cameraZoomSpeed);
             }
@@ -366,6 +370,15 @@ public class GameManager : MonoBehaviour
         else
         {
             isMaxZoom = false;
+        }
+        if (mainCamera.orthographicSize <= minZoom)
+        {
+            isMinZoom = true;
+            mainCamera.orthographicSize = minZoom;
+        }
+        else
+        {
+            isMinZoom = false;
         }
     }
     #endregion

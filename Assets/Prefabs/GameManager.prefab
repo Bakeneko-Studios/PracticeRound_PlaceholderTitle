@@ -70,7 +70,7 @@ MonoBehaviour:
   mountainsMid: {fileID: 0}
   mountainsLeft: {fileID: 0}
   mountainsRight: {fileID: 0}
-  mapLength: 8350
+  mapLength: 6500
   slowSpeed: 67.5
   moderateSpeed: 75
   fastSpeed: 82.5

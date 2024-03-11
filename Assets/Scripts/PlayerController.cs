@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
         isTouchingTower = false;
 
         equippedSpell = Spell.unequipped;
-        //iceProjectilesLeft = iceProjectileCount;
+        iceProjectilesLeft = iceProjectileCount;
 
         isStunned = false;
         isDashing = false;
@@ -433,6 +433,7 @@ public class PlayerController : MonoBehaviour
             equippedSpell = Spell.unequipped;
             spellText.text = "Spell:\n";
             getIceText.SetActive(false);
+            iceProjectilesLeft = iceProjectileCount;
         }
 
         
@@ -608,9 +609,10 @@ public class PlayerController : MonoBehaviour
         float cameraHalfWidth = initialCameraSize * mainCamera.aspect;
         //float cameraHalfHeight = initialCameraSize;
 
-        float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth);
+        float deltaX = Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth;
+        //float deltaX = Mathf.Max(0, Mathf.Abs(transform.position.x - mainCamera.transform.position.x) - cameraHalfWidth);
         //float deltaY = Mathf.Max(0, Mathf.Abs(transform.position.y - mainCamera.transform.position.y) - cameraHalfHeight);
-        return deltaX + rightBoundaryWidth;
+        return deltaX;
         /*
         if (transform.position.x >= mainCamera.transform.position.x)
         {
@@ -662,6 +664,7 @@ public class PlayerController : MonoBehaviour
         {
             baseSpeed -= touchBatSwarmSpeedPenalty;
             UpdateSpeedIncreaseText("-" + touchBatSwarmSpeedPenalty);
+            hitParticle.Play();
             batHitSFX.PlayOneShot(batHitSFX.clip);
         }
         else if (collision.gameObject.CompareTag("Ice Projectile") && !isDashing)
