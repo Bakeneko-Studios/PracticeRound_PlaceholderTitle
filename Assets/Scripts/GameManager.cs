@@ -624,30 +624,32 @@ public class GameManager : MonoBehaviour
 
     public void EndGame(int winner)
     {
-        Debug.Log("Player1: " + player1Controller.IsOutsideCameraView());
-        Debug.Log("Player2: " + player2Controller.IsOutsideCameraView());
-        Debug.Log("game over");
+        if (!gameOver) {
+            Debug.Log("Player1: " + player1Controller.IsOutsideCameraView());
+            Debug.Log("Player2: " + player2Controller.IsOutsideCameraView());
+            Debug.Log("game over");
 
-        gamePlayUI.SetActive(false);
-        if (winner == 1)
-        {
-            p1WinPp.SetActive(true);
+            gamePlayUI.SetActive(false);
+            if (winner == 1)
+            {
+                p1WinPp.SetActive(true);
+            }
+            else
+            {
+                p2WinPp.SetActive(true);
+            }
+
+            returnToScreenText.gameObject.SetActive(false);
+            gameOverUI.SetActive(true);
+            gameOverText.text = "Player " + winner + " Wins";
+            gameOver = true;
+
+            gameEndMusic.Play();
+            lowPassFilter.cutoffFrequency = superMuffledFrequency;
+            //inGameMusic.Stop();
+            
+            StartCoroutine(EndGameSlowDown());
         }
-        else
-        {
-            p2WinPp.SetActive(true);
-        }
-
-        returnToScreenText.gameObject.SetActive(false);
-        gameOverUI.SetActive(true);
-        gameOverText.text = "Player " + winner + " Wins";
-        gameOver = true;
-
-        gameEndMusic.Play();
-        lowPassFilter.cutoffFrequency = superMuffledFrequency;
-        //inGameMusic.Stop();
-        
-        StartCoroutine(EndGameSlowDown());
     }
 
     private IEnumerator EndGameSlowDown()
