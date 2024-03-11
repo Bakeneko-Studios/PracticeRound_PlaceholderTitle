@@ -114,7 +114,7 @@ MonoBehaviour:
   shieldName: Protection Aura
   SFXManager: {fileID: 0}
   hitParticle: {fileID: 0}
-  touchingTowerJumpBoost: 2
+  touchingTowerJumpBoost: 2.25
   touchBatSwarmSpeedPenalty: 2
   cauldronSpeedIncrease: 6
   rightBoundaryWidth: 12
